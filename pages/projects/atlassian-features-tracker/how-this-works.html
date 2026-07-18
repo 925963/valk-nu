@@ -1,0 +1,83 @@
+<!--@page id="projects" title="how this works" crumbs="projects=projects.html|atlassian features tracker=projects/atlassian-features-tracker/"-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU // ATLASSIAN FEATURES — HOW THIS WORKS</title>
+  <meta name="description" content="How the Atlassian Cloud feature tracker collects and categorises features.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ROOT}}css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <!--@header-->
+
+    <main class="terminal panel" aria-label="How this works">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="terminal-inner">
+
+        <header class="header">
+          <h1 class="title">ATLASSIAN FEATURES</h1>
+        </header>
+        <hr class="divider">
+
+        {{TRACKER_NAV:how-this-works}}
+
+        <p class="menu-label">$ man features</p>
+
+        <div class="ft-doc">
+          <p>
+            This tracker follows features published in the
+            <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">Atlassian Cloud weekly release notes</a>.
+            Every week Atlassian lists changes to their cloud products; a scraper reads those pages, deduplicates
+            each feature across the weeks it appears, and records how its status changes over time.
+          </p>
+
+          <h2>Status labels</h2>
+          <div class="doc-table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>TAG</th><th>MEANING</th></tr></thead>
+              <tbody>
+                <tr><td><span class="ft-tag ft-coming_soon">SOON</span></td><td class="doc-desc">Announced, not yet rolling out.</td></tr>
+                <tr><td><span class="ft-tag ft-rolling_out_new">NEW</span></td><td class="doc-desc">Just started rolling out in the latest tracked week.</td></tr>
+                <tr><td><span class="ft-tag ft-rolling_out">ROLLING</span></td><td class="doc-desc">Gradually being deployed to sites.</td></tr>
+                <tr><td><span class="ft-tag ft-rollout_complete">COMPLETE</span></td><td class="doc-desc">Rollout finished — dropped off the weekly notes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>How deduplication works</h2>
+          <p>A feature often appears across many consecutive weekly pages while it rolls out. The scraper:</p>
+          <ol>
+            <li>Detects each feature by a stable ID derived from its title and product.</li>
+            <li>Records the first week it appeared as the <em>announced date</em>.</li>
+            <li>Tracks status changes (e.g. coming soon &rarr; rolling out).</li>
+            <li>Marks a feature <span class="ft-tag ft-rollout_complete">COMPLETE</span> once it disappears from several consecutive weeks.</li>
+          </ol>
+
+          <h2>Update schedule</h2>
+          <p>
+            The scraper runs weekly via GitHub Actions in the
+            <a href="https://github.com/925963/atlassian-features" target="_blank" rel="noopener">atlassian-features</a>
+            repository. This page is a static, terminal-styled front-end built from a snapshot of that data —
+            re-import and rebuild to refresh it.
+          </p>
+
+          <h2>Source</h2>
+          <p>
+            Data sourced from
+            <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">confluence.atlassian.com/cloud/blog</a>.
+            Built by <a href="https://brainboss.nl" target="_blank" rel="noopener">Brainboss</a>, an Atlassian Gold Solution Partner.
+          </p>
+        </div>
+
+      </div>
+    </main>
+
+    <!--@footer-->
+  </div>
+</body>
+</html>

@@ -81,12 +81,23 @@ function rootPrefix(relPath) {
   return '../'.repeat(depth);
 }
 
+// Breadcrumb trail from the directive. Two forms:
+//   parent="projects" parenturl="projects.html"        (single level)
+//   crumbs="projects=projects.html|tracker=projects/tracker/"  (multi level)
+// URLs are site-root-relative; {{ROOT}} is prepended and resolved per page.
 function buildBreadcrumb(attrs) {
   const sep = ' <span class="breadcrumb-sep">&gt;</span> ';
   const parts = ['<a href="{{ROOT}}index.html">valk.nu</a>'];
-  if (attrs.parent && attrs.parenturl) {
-    parts.push(`<a href="{{ROOT}}${esc(attrs.parenturl)}">${esc(attrs.parent)}</a>`);
+  let crumbs = [];
+  if (attrs.crumbs) {
+    crumbs = attrs.crumbs.split('|').map((s) => {
+      const i = s.indexOf('=');
+      return { label: s.slice(0, i).trim(), url: s.slice(i + 1).trim() };
+    });
+  } else if (attrs.parent && attrs.parenturl) {
+    crumbs = [{ label: attrs.parent, url: attrs.parenturl }];
   }
+  for (const c of crumbs) parts.push(`<a href="{{ROOT}}${esc(c.url)}">${esc(c.label)}</a>`);
   parts.push(`<span class="breadcrumb-current">${esc(attrs.title || attrs.id)}</span>`);
   return parts.join(sep);
 }
@@ -145,6 +156,132 @@ function renderTable(name, file) {
   );
 }
 
+/* ===================================================================
+   Atlassian features tracker (data/atlassian-features.json)
+   =================================================================== */
+
+const FEATURES_FILE = path.join(DATA_DIR, 'atlassian-features.json');
+
+const STATUS_TAG = {
+  coming_soon: 'SOON',
+  rolling_out_new: 'NEW',
+  rolling_out: 'ROLLING',
+  rollout_complete: 'COMPLETE',
+  released: 'RELEASED',
+};
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+function fmtDate(d) {
+  if (!d) return '—';
+  const p = String(d).split('-');
+  if (p.length < 3) return esc(String(d));
+  return `${parseInt(p[2], 10)} ${MONTHS[parseInt(p[1], 10) - 1]} ${p[0]}`;
+}
+
+let _features = null;
+function loadFeatures() {
+  if (_features) return _features;
+  if (!fs.existsSync(FEATURES_FILE)) {
+    console.warn('  ! data/atlassian-features.json not found (run scripts/import-atlassian-features.js)');
+    _features = { data_through: null, feature_count: 0, features: [] };
+  } else {
+    _features = JSON.parse(read(FEATURES_FILE));
+  }
+  return _features;
+}
+
+const TRACKER_VIEWS = [
+  { key: 'all', label: 'all features', file: 'index.html' },
+  { key: 'new-this-week', label: 'new this week', file: 'new-this-week.html' },
+  { key: 'coming-soon', label: 'coming soon', file: 'coming-soon.html' },
+  { key: 'rolling-out', label: 'rolling out', file: 'rolling-out.html' },
+  { key: 'completed', label: 'completed', file: 'completed.html' },
+  { key: 'how-this-works', label: 'how this works', file: 'how-this-works.html' },
+];
+
+function renderTrackerNav(current) {
+  const items = TRACKER_VIEWS.map((v) => {
+    const cur = v.key === current ? ' data-current' : '';
+    return `<a class="tracker-tab"${cur} href="${v.file}">${esc(v.label)}</a>`;
+  }).join('\n      ');
+  return `<nav class="tracker-nav" aria-label="Tracker views">\n      ${items}\n    </nav>`;
+}
+
+const byAnnouncedDesc = (a, b) => (b.announced_date || '').localeCompare(a.announced_date || '');
+
+function featuresTable(list, withStatus) {
+  const head = withStatus
+    ? '<tr><th>FEATURE</th><th>PRODUCT</th><th>STATUS</th><th>ANNOUNCED</th></tr>'
+    : '<tr><th>FEATURE</th><th>PRODUCT</th><th>ANNOUNCED</th></tr>';
+  const rows = list.map((f) => {
+    const link = `<td class="doc-link"><a href="${esc(f.source_url)}" target="_blank" rel="noopener">${esc(f.title)}</a></td>`;
+    const prod = `<td class="ft-prod">${esc(f.product)}</td>`;
+    const status = withStatus
+      ? `<td class="doc-meta"><span class="ft-tag ft-${esc(f.status)}">${STATUS_TAG[f.status] || esc(f.status)}</span></td>`
+      : '';
+    const ann = `<td class="doc-meta">${fmtDate(f.announced_date)}</td>`;
+    return `        <tr>${link}${prod}${status}${ann}</tr>`;
+  }).join('\n');
+  return (
+    '<div class="doc-table-wrap">\n' +
+    '      <table class="doc-table">\n' +
+    `        <thead>${head}</thead>\n` +
+    '        <tbody>\n' + rows + '\n        </tbody>\n' +
+    '      </table>\n    </div>'
+  );
+}
+
+const STATUS_OF_VIEW = { 'coming-soon': 'coming_soon', 'rolling-out': 'rolling_out', 'completed': 'rollout_complete' };
+
+function renderFeaturesView(view) {
+  const data = loadFeatures();
+  const feats = data.features || [];
+
+  if (view === 'all') {
+    const count = (k) => feats.filter((f) => f.status === k).length;
+    const summary =
+      '<ul class="ft-summary">\n' +
+      `      <li><span class="ft-tag ft-rolling_out_new">NEW</span> in the latest week feed: ${count('rolling_out_new')}</li>\n` +
+      `      <li><span class="ft-tag ft-coming_soon">SOON</span> coming soon: ${count('coming_soon')}</li>\n` +
+      `      <li><span class="ft-tag ft-rolling_out">ROLLING</span> rolling out: ${count('rolling_out')}</li>\n` +
+      `      <li><span class="ft-tag ft-rollout_complete">COMPLETE</span> completed / released: ${count('rollout_complete') + count('released')}</li>\n` +
+      '    </ul>';
+    const meta = `<p class="ft-meta">// ${feats.length} features tracked · data through ${fmtDate(data.data_through)}</p>`;
+    const table = featuresTable([...feats].sort(byAnnouncedDesc), true);
+    return `${summary}\n    ${meta}\n    ${table}`;
+  }
+
+  if (view === 'new-this-week') {
+    const news = feats.filter((f) => f.status === 'rolling_out_new');
+    const latest = news.map((f) => f.last_seen_week).filter(Boolean).sort().reverse()[0];
+    const list = (latest ? news.filter((f) => f.last_seen_week === latest) : news)
+      .sort((a, b) => (a.product || '').localeCompare(b.product || '') || (a.title || '').localeCompare(b.title || ''));
+    const byProduct = {};
+    for (const f of list) (byProduct[f.product] = byProduct[f.product] || []).push(f);
+    const sections = Object.keys(byProduct).sort().map((prod) => {
+      const items = byProduct[prod].map((f) => {
+        const d = f.description ? ` <span class="ft-li-desc">— ${esc(f.description)}</span>` : '';
+        return `      <li><a href="${esc(f.source_url)}" target="_blank" rel="noopener">${esc(f.title)}</a>${d}</li>`;
+      }).join('\n');
+      return `    <h3 class="ft-product">${esc(prod)}</h3>\n    <ul class="ft-list">\n${items}\n    </ul>`;
+    }).join('\n');
+    const header = latest
+      ? `<p class="ft-meta">// week of ${fmtDate(latest)} — ${list.length} new feature(s)</p>`
+      : '<p class="ft-meta">// nothing new.</p>';
+    return `${header}\n${sections || '    <p class="ft-meta">// nothing new this week.</p>'}`;
+  }
+
+  const st = STATUS_OF_VIEW[view];
+  if (st) {
+    const list = feats.filter((f) => f.status === st).sort(byAnnouncedDesc);
+    const meta = `<p class="ft-meta">// ${list.length} feature(s) · data through ${fmtDate(data.data_through)}</p>`;
+    return `${meta}\n    ${featuresTable(list, false)}`;
+  }
+
+  console.warn(`  ! unknown FEATURES view: ${view}`);
+  return `<!-- unknown view ${view} -->`;
+}
+
 function build() {
   const header = stripBanner(read(path.join(PARTIALS_DIR, 'header.html')));
   const footer = stripBanner(read(path.join(PARTIALS_DIR, 'footer.html')));
@@ -167,6 +304,10 @@ function build() {
 
     // Data-driven tables.
     html = html.replace(/\{\{TABLE:([\w-]+)\}\}/g, (_, name) => renderTable(name, rel));
+
+    // Atlassian features tracker.
+    html = html.replace(/\{\{TRACKER_NAV:([\w-]+)\}\}/g, (_, v) => renderTrackerNav(v));
+    html = html.replace(/\{\{FEATURES:([\w-]+)\}\}/g, (_, v) => renderFeaturesView(v));
 
     // Resolve relative paths for this page's depth (must run last).
     html = html.replace(/\{\{ROOT\}\}/g, rootPrefix(rel));

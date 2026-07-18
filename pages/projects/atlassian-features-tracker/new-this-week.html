@@ -1,0 +1,39 @@
+<!--@page id="projects" title="new this week" crumbs="projects=projects.html|atlassian features tracker=projects/atlassian-features-tracker/"-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU // ATLASSIAN FEATURES — NEW THIS WEEK</title>
+  <meta name="description" content="Atlassian Cloud features that started rolling out in the latest tracked week.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ROOT}}css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <!--@header-->
+
+    <main class="terminal panel" aria-label="New this week">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="terminal-inner">
+
+        <header class="header">
+          <h1 class="title">ATLASSIAN FEATURES</h1>
+        </header>
+        <hr class="divider">
+
+        {{TRACKER_NAV:new-this-week}}
+
+        <p class="menu-label">$ query features --new-this-week</p>
+
+        {{FEATURES:new-this-week}}
+
+      </div>
+    </main>
+
+    <!--@footer-->
+  </div>
+</body>
+</html>

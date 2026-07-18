@@ -17,9 +17,12 @@
 .socials a:visited,
 .project-name:visited,
 .doc-link a:visited,
-.nav-item[data-current]:visited { color: var(--green-bright); }
+.ft-list a:visited,
+.nav-item[data-current]:visited,
+.tracker-tab[data-current]:visited { color: var(--green-bright); }
 
-.nav-item:visited { color: var(--green-dim); }
+.nav-item:visited,
+.tracker-tab:visited { color: var(--green-dim); }
 
 html, body {
   margin: 0;
@@ -528,6 +531,123 @@ body {
   font-size: 18px;
   color: var(--green-dim);
 }
+
+/* ===================================================================
+   Atlassian features tracker
+   =================================================================== */
+
+.tracker-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 2px 0 10px;
+}
+
+.tracker-tab {
+  font-size: 19px;
+  line-height: 1;
+  padding: 5px 9px;
+  border: 1px solid var(--green-dim);
+  color: var(--green-dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tracker-tab:hover,
+.tracker-tab:focus-visible {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+  outline: none;
+}
+
+.tracker-tab[data-current] {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+}
+
+.tracker-tab[data-current]::before { content: "> "; }
+
+.ft-meta {
+  margin: 4px 0 12px;
+  font-size: 19px;
+  color: var(--green-dim);
+}
+
+.ft-summary {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 20px;
+}
+
+.ft-summary li { color: var(--green-bright); }
+
+.ft-tag {
+  display: inline-block;
+  font-size: 15px;
+  padding: 1px 6px;
+  border: 1px solid var(--green-dim);
+  color: var(--green-bright);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* Status accents stay monochrome — only brightness/weight varies. */
+.ft-tag.ft-rolling_out_new { color: var(--green-light); border-color: var(--green-light); }
+.ft-tag.ft-coming_soon { color: var(--green-bright); }
+.ft-tag.ft-rolling_out { color: var(--green-dim); }
+.ft-tag.ft-rollout_complete,
+.ft-tag.ft-released { color: var(--green-dim); border-color: rgba(31, 143, 61, .5); }
+
+.ft-prod {
+  color: var(--green-dim);
+  padding: 7px 16px 7px 0;
+  border-bottom: 1px dashed rgba(31, 143, 61, .45);
+  vertical-align: top;
+}
+
+.ft-product {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--green-light);
+  margin: 18px 0 6px;
+}
+
+.ft-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 19px;
+}
+
+.ft-list a {
+  color: var(--green-bright);
+  text-decoration: none;
+}
+
+.ft-list a::before { content: "> "; color: var(--green-dim); }
+
+.ft-list a:hover,
+.ft-list a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.ft-li-desc { color: var(--green-bright); opacity: .7; }
+
+/* How-this-works prose */
+.ft-doc { font-size: 20px; line-height: 1.5; }
+.ft-doc p { margin: 0 0 12px; }
+.ft-doc h2 { font-size: 24px; font-weight: 400; color: var(--green-light); margin: 20px 0 8px; }
+.ft-doc ul, .ft-doc ol { margin: 0 0 12px; padding-left: 22px; }
+.ft-doc li { margin-bottom: 5px; }
+.ft-doc a { color: var(--green-bright); }
 
 /* ===================================================================
    Responsive

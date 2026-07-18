@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU // ATLASSIAN FEATURES — HOW THIS WORKS</title>
+  <meta name="description" content="How the Atlassian Cloud feature tracker collects and categorises features.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+  <div class="site-header-bar">
+    <p class="breadcrumb"><a href="../../index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <a href="../../projects.html">projects</a> <span class="breadcrumb-sep">&gt;</span> <a href="../../projects/atlassian-features-tracker/">atlassian features tracker</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">how this works</span></p>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-dropdown">[MENU]</button>
+  </div>
+  <nav class="menu-dropdown" id="menu-dropdown" aria-label="Main menu" hidden>
+    <p class="menu-label">$ ls /menu</p>
+    <ul class="menu-list">
+      <li><a class="nav-item" data-nav="home" href="../../index.html">HOME</a></li>
+      <li><a class="nav-item" data-nav="about" href="#">ABOUT</a></li>
+      <li><a class="nav-item" data-nav="projects" data-current href="../../projects.html">PROJECTS</a></li>
+      <li><a class="nav-item" data-nav="blog" href="#">BLOG</a></li>
+      <li><a class="nav-item" data-nav="contact" href="#">CONTACT</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="terminal panel" aria-label="How this works">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="terminal-inner">
+
+        <header class="header">
+          <h1 class="title">ATLASSIAN FEATURES</h1>
+        </header>
+        <hr class="divider">
+
+        <nav class="tracker-nav" aria-label="Tracker views">
+      <a class="tracker-tab" href="index.html">all features</a>
+      <a class="tracker-tab" href="new-this-week.html">new this week</a>
+      <a class="tracker-tab" href="coming-soon.html">coming soon</a>
+      <a class="tracker-tab" href="rolling-out.html">rolling out</a>
+      <a class="tracker-tab" href="completed.html">completed</a>
+      <a class="tracker-tab" data-current href="how-this-works.html">how this works</a>
+    </nav>
+
+        <p class="menu-label">$ man features</p>
+
+        <div class="ft-doc">
+          <p>
+            This tracker follows features published in the
+            <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">Atlassian Cloud weekly release notes</a>.
+            Every week Atlassian lists changes to their cloud products; a scraper reads those pages, deduplicates
+            each feature across the weeks it appears, and records how its status changes over time.
+          </p>
+
+          <h2>Status labels</h2>
+          <div class="doc-table-wrap">
+            <table class="doc-table">
+              <thead><tr><th>TAG</th><th>MEANING</th></tr></thead>
+              <tbody>
+                <tr><td><span class="ft-tag ft-coming_soon">SOON</span></td><td class="doc-desc">Announced, not yet rolling out.</td></tr>
+                <tr><td><span class="ft-tag ft-rolling_out_new">NEW</span></td><td class="doc-desc">Just started rolling out in the latest tracked week.</td></tr>
+                <tr><td><span class="ft-tag ft-rolling_out">ROLLING</span></td><td class="doc-desc">Gradually being deployed to sites.</td></tr>
+                <tr><td><span class="ft-tag ft-rollout_complete">COMPLETE</span></td><td class="doc-desc">Rollout finished — dropped off the weekly notes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>How deduplication works</h2>
+          <p>A feature often appears across many consecutive weekly pages while it rolls out. The scraper:</p>
+          <ol>
+            <li>Detects each feature by a stable ID derived from its title and product.</li>
+            <li>Records the first week it appeared as the <em>announced date</em>.</li>
+            <li>Tracks status changes (e.g. coming soon &rarr; rolling out).</li>
+            <li>Marks a feature <span class="ft-tag ft-rollout_complete">COMPLETE</span> once it disappears from several consecutive weeks.</li>
+          </ol>
+
+          <h2>Update schedule</h2>
+          <p>
+            The scraper runs weekly via GitHub Actions in the
+            <a href="https://github.com/925963/atlassian-features" target="_blank" rel="noopener">atlassian-features</a>
+            repository. This page is a static, terminal-styled front-end built from a snapshot of that data —
+            re-import and rebuild to refresh it.
+          </p>
+
+          <h2>Source</h2>
+          <p>
+            Data sourced from
+            <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">confluence.atlassian.com/cloud/blog</a>.
+            Built by <a href="https://brainboss.nl" target="_blank" rel="noopener">Brainboss</a>, an Atlassian Gold Solution Partner.
+          </p>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+  <nav class="socials" aria-label="Social links">
+    <a href="https://www.linkedin.com/in/rikdevalk/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener">[LI]</a>
+    <a href="https://www.instagram.com/rik.de.valk/" title="Instagram" aria-label="Instagram" target="_blank" rel="noopener">[IG]</a>
+    <a href="https://wa.me/31655372988" title="WhatsApp" aria-label="WhatsApp" target="_blank" rel="noopener">[WA]</a>
+    <a href="https://signal.me/#p/+31655372988" title="Signal" aria-label="Signal" target="_blank" rel="noopener">[SG]</a>
+  </nav>
+  <p class="footer-status">READY&gt;<span class="cursor">_</span></p>
+</footer>
+<script src="../../js/nav.js"></script>
+
+  </div>
+</body>
+</html>

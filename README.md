@@ -17,12 +17,23 @@ pages/            # SOURCE templates (edit these); subfolders map to URLs
   projects/
     atlassian-documentation.html   # -> /projects/atlassian-documentation.html
     toolbox.html                   # -> /projects/toolbox.html
+    atlassian-features-tracker/    # -> /projects/atlassian-features-tracker/...
+      index.html                   #   all features
+      new-this-week.html
+      coming-soon.html
+      rolling-out.html
+      completed.html
+      how-this-works.html
 partials/         # shared chrome injected at build time
   header.html     #   compact breadcrumb bar + collapsible nav dropdown
   footer.html     #   social row + READY> status
 data/             # JSON that feeds data-driven pages
   atlassian-documentation.json     # doc-link table (columns + items)
   toolbox.json                     # toolbox table (columns + items)
+  atlassian-features.json          # tracker snapshot (see scripts/ below)
+scripts/
+  import-atlassian-features.js     # refresh the tracker snapshot from the
+                                   # sibling atlassian-features repo
 build.js          # stitches partials + data into pages/ -> repo root
 
 index.html                          # GENERATED — do not edit by hand
@@ -74,6 +85,26 @@ Each template starts with a directive that drives the shared header:
 
   A column with `link` renders its `field` as a link to `item[link]`. Rows
   render in JSON order — reorder/add items in the JSON and re-run the build.
+- `{{TRACKER_NAV:<view>}}` / `{{FEATURES:<view>}}` build the Atlassian features
+  tracker views (`all`, `new-this-week`, `coming-soon`, `rolling-out`,
+  `completed`) from `data/atlassian-features.json`.
+- `crumbs="label=url|label=url"` in the directive builds a multi-level
+  breadcrumb (URLs are site-root-relative; `{{ROOT}}` is applied per page).
+
+## Atlassian features tracker
+
+The tracker pages are generated from a snapshot of the separate
+[atlassian-features](https://github.com/925963/atlassian-features) repo (which
+scrapes the Atlassian Cloud weekly release notes). To refresh:
+
+```bash
+node scripts/import-atlassian-features.js   # reads ../atlassian-features/data/features
+node build.js
+```
+
+`import-atlassian-features.js` writes a trimmed `data/atlassian-features.json`
+(no per-feature history, capped descriptions). Feature titles link out to their
+Atlassian source page — the tracker doesn't generate per-feature detail pages.
 
 The generated `*.html` files are committed so GitHub Pages can serve them
 directly (no CI required); re-run `node build.js` and commit after any change.
