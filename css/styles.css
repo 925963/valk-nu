@@ -10,6 +10,17 @@
 
 * { box-sizing: border-box; }
 
+/* Keep every link in the terminal palette in all states — never fall back to
+   the browser's default blue/purple for :visited. Colors are refined per
+   component below; these :visited rules just mirror each component's color. */
+.breadcrumb a:visited,
+.socials a:visited,
+.project-name:visited,
+.doc-link a:visited,
+.nav-item[data-current]:visited { color: var(--green-bright); }
+
+.nav-item:visited { color: var(--green-dim); }
+
 html, body {
   margin: 0;
   padding: 0;
