@@ -20,11 +20,18 @@ body {
   color: var(--green-bright);
   font-family: 'VT323', monospace;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 32px 20px;
   -webkit-font-smoothing: none;
+}
+
+/* Centered content column shared by every page. */
+.page {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
@@ -284,10 +291,180 @@ body {
   color: var(--black);
 }
 
-/* Responsive: stack avatar + menu on narrow screens */
+/* ===================================================================
+   Shared chrome: compact header + footer (used on every page)
+   =================================================================== */
+
+.site-header,
+.site-footer {
+  position: relative;
+  background: var(--black);
+  border: 2px solid var(--green-dim);
+  box-shadow: 0 0 18px rgba(51, 255, 102, .12);
+}
+
+.site-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 18px;
+}
+
+.breadcrumb {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.breadcrumb a {
+  color: var(--green-bright);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.breadcrumb-sep { color: var(--green-dim); }
+.breadcrumb-current { color: var(--green-bright); }
+
+.menu-toggle {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  line-height: 1;
+  background: #000;
+  color: var(--green-bright);
+  border: 1px solid var(--green-dim);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  border-color: var(--green-bright);
+  outline: none;
+}
+
+/* Dropdown styled like the homepage's "$ ls /menu" block. */
+.menu-dropdown {
+  border-top: 1px dashed var(--green-dim);
+  padding: 14px 18px 16px;
+}
+
+.menu-dropdown[hidden] { display: none; }
+
+.nav-item {
+  display: inline-block;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--green-dim);
+  text-decoration: none;
+  white-space: pre;
+}
+
+.nav-item::before {
+  content: "  ";
+  white-space: pre;
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+  color: var(--green-bright);
+  outline: none;
+}
+
+/* Current page: build.js adds the data-current attribute. */
+.nav-item[data-current] {
+  color: var(--green-bright);
+  text-decoration: underline;
+}
+
+.nav-item[data-current]::before { content: "> "; }
+
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 18px;
+}
+
+.footer-status {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ===================================================================
+   Home: intro block beside the avatar
+   =================================================================== */
+
+.whoami {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.whoami p { margin: 0 0 6px; }
+
+.whoami-cmd { font-size: 22px; opacity: .8; }
+.whoami-name { font-size: 26px; color: var(--green-bright); }
+.whoami-note { font-size: 20px; color: var(--green-dim); line-height: 1.4; }
+
+/* ===================================================================
+   Projects: terminal-log style list
+   =================================================================== */
+
+.projects {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project p { margin: 0; }
+
+.project-cmd {
+  font-size: 20px;
+  color: var(--green-dim);
+}
+
+.project-name {
+  display: inline-block;
+  margin: 2px 0;
+  font-size: 26px;
+  color: var(--green-bright);
+  text-decoration: none;
+}
+
+.project-name::before { content: "> "; }
+
+.project-name:hover,
+.project-name:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.project-desc {
+  font-size: 20px;
+  color: var(--green-bright);
+  opacity: .75;
+}
+
+/* ===================================================================
+   Responsive
+   =================================================================== */
+
 @media (max-width: 480px) {
   .terminal-inner { padding: 26px; gap: 18px; }
   .title { font-size: 28px; }
   .status { font-size: 20px; }
-  .profile { gap: 18px; }
+  .profile { gap: 18px; flex-direction: column; }
+  .site-header-bar,
+  .site-footer { padding: 10px 14px; }
 }
