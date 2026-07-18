@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU TERMINAL</title>
+  <meta name="description" content="valk.nu — a green-phosphor terminal homepage with a playable 8-bit platformer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="terminal" aria-label="valk.nu terminal">
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="terminal-inner">
+
+      <!-- Header row -->
+      <header class="header">
+        <h1 class="title">VALK.NU TERMINAL</h1>
+        <p class="status">READY&gt;<span class="cursor">_</span></p>
+      </header>
+      <hr class="divider">
+
+      <!-- Avatar + nav row -->
+      <div class="profile">
+        <figure class="avatar">
+          <div class="avatar-frame">
+            <img src="avatar-rik.png" alt="Portrait of Rik" width="88" height="88">
+            <span class="avatar-tint" aria-hidden="true"></span>
+            <span class="avatar-dodge" aria-hidden="true"></span>
+          </div>
+          <figcaption class="avatar-caption">user: rik</figcaption>
+        </figure>
+
+        <nav class="menu" aria-label="Main menu">
+          <p class="menu-label">$ ls /menu</p>
+          <ul class="menu-list">
+            <li><a class="menu-item is-active" href="#" aria-current="page">&gt; HOME<span class="cursor">_</span></a></li>
+            <li><a class="menu-item" href="#">&nbsp;&nbsp;ABOUT</a></li>
+            <li><a class="menu-item" href="#">&nbsp;&nbsp;PROJECTS</a></li>
+            <li><a class="menu-item" href="#">&nbsp;&nbsp;BLOG</a></li>
+            <li><a class="menu-item" href="#">&nbsp;&nbsp;CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Social row -->
+      <nav class="socials" aria-label="Social links">
+        <a href="#" title="LinkedIn" aria-label="LinkedIn">[LI]</a>
+        <a href="#" title="Instagram" aria-label="Instagram">[IG]</a>
+        <a href="#" title="WhatsApp" aria-label="WhatsApp">[WA]</a>
+        <a href="#" title="Signal" aria-label="Signal">[SG]</a>
+      </nav>
+
+      <!-- Game panel -->
+      <section class="game" aria-label="Playable demo">
+        <p class="game-label">$ run demo.bin</p>
+        <div class="game-screen" id="game-screen" tabindex="0" aria-label="Platformer game — click and use arrow keys to play">
+          <canvas id="game-canvas" width="320" height="180"></canvas>
+        </div>
+        <p class="game-caption">ARROWS MOVE // UP OR SPACE JUMP // STAR = OVERCLOCK // AVOID OR STOMP THE BUG // REACH THE FLAG</p>
+        <div class="game-controls">
+          <div class="dpad">
+            <button type="button" id="btn-left" aria-label="Move left">[&lt;]</button>
+            <button type="button" id="btn-jump" aria-label="Jump">[^]</button>
+            <button type="button" id="btn-right" aria-label="Move right">[&gt;]</button>
+          </div>
+          <button type="button" id="btn-reset" class="reset-btn" aria-label="Reset game">[RESET]</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
