@@ -11,16 +11,21 @@ page; its output is plain static HTML deployable as-is to GitHub Pages.
 ## Structure
 
 ```
-pages/            # SOURCE templates (edit these), one per page
+pages/            # SOURCE templates (edit these); subfolders map to URLs
   index.html      #   home id="home"
   projects.html   #   projects id="projects"
+  projects/
+    atlassian-documentation.html   # -> /projects/atlassian-documentation.html
 partials/         # shared chrome injected at build time
   header.html     #   compact breadcrumb bar + collapsible nav dropdown
   footer.html     #   social row + READY> status
-build.js          # stitches partials into pages/ -> repo root (node build.js)
+data/             # JSON that feeds data-driven pages
+  atlassian-documentation.json     # the doc-link table rows
+build.js          # stitches partials + data into pages/ -> repo root
 
-index.html        # GENERATED — do not edit by hand
-projects.html     # GENERATED — do not edit by hand
+index.html                          # GENERATED — do not edit by hand
+projects.html                       # GENERATED — do not edit by hand
+projects/atlassian-documentation.html   # GENERATED — do not edit by hand
 css/styles.css    # green-phosphor terminal styling (design option 1c)
 js/game.js        # platformer engine (window.createGame)
 js/main.js        # wires the engine to canvas + keyboard/touch controls
@@ -40,11 +45,19 @@ node build.js
 Each template starts with a directive that drives the shared header:
 
 ```html
-<!--@page id="projects" title="projects"-->
+<!--@page id="projects" title="atlassian documentation" parent="projects" parenturl="projects.html"-->
 ```
 
-`id` marks the matching nav item as current (breadcrumb + `>` cursor); the build
-injects the partials at the `<!--@header-->` and `<!--@footer-->` placeholders.
+- `id` marks the matching nav item as current.
+- `title` / `parent` / `parenturl` build the breadcrumb trail
+  (`valk.nu > projects > atlassian documentation`).
+- The build injects the partials at `<!--@header-->` / `<!--@footer-->`.
+- `{{ROOT}}` in any template/partial resolves to the correct relative prefix
+  for that page's depth, so pages in subfolders link correctly.
+- `{{DOC_TABLE:<name>}}` renders a terminal-style table from
+  `data/<name>.json` (each item: `title`, `url`, `description`, `product`,
+  `hosting`). Edit the JSON and re-run the build to update the table.
+
 The generated `*.html` files are committed so GitHub Pages can serve them
 directly (no CI required); re-run `node build.js` and commit after any change.
 

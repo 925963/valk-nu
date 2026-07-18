@@ -1,0 +1,130 @@
+{
+  "items": [
+    {
+      "title": "Overzicht product documentatie",
+      "url": "https://confluence.atlassian.com/alldoc/atlassian-documentation-32243719.html",
+      "description": "Overzicht van alle product documentatie van Atlassian",
+      "product": "All",
+      "hosting": "All"
+    },
+    {
+      "title": "Jira Cloud product documentatie",
+      "url": "https://support.atlassian.com/jira-software-cloud/resources/",
+      "description": "Product documentatie van Jira Software Cloud",
+      "product": "Jira Software",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Documentatie van Automation for Jira",
+      "url": "https://support.atlassian.com/cloud-automation/docs/jira-cloud-automation/",
+      "description": "Automation for Jira",
+      "product": "Jira Core",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Jira Software Cloud API",
+      "url": "https://developer.atlassian.com/cloud/jira/software/rest/intro/",
+      "description": "API documentatie van Jira software Cloud",
+      "product": "Jira Software",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Jira Cloud API",
+      "url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/",
+      "description": "API documentatie van Jira Cloud",
+      "product": "Jira Core",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Jira Service Management Cloud",
+      "url": "https://support.atlassian.com/jira-service-management-cloud/resources/",
+      "description": "Product documentatie van Jira Service Management Cloud",
+      "product": "Jira Service Management",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Jira Service Management Cloud API",
+      "url": "https://developer.atlassian.com/cloud/jira/service-desk/rest/intro/",
+      "description": "API documentatie van Jira Service Management Cloud (Boards, Sprints etc)",
+      "product": "Jira Service Management",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Confluence Cloud product documentatie",
+      "url": "https://support.atlassian.com/confluence-cloud/resources/",
+      "description": "Product documentatie van Confluence Cloud",
+      "product": "Confluence",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Confluence Cloud API",
+      "url": "https://developer.atlassian.com/cloud/confluence/rest/v1/intro/",
+      "description": "API documentatie van Confluence Cloud",
+      "product": "Confluence",
+      "hosting": "Cloud"
+    },
+    {
+      "title": "Jira Service Management Data Center product documentatie",
+      "url": "https://confluence.atlassian.com/servicemanagementserver/jira-service-management-data-center-and-server-5-7-documentation-939926001.html",
+      "description": "Product documentatie Jira Service Management Data Center",
+      "product": "Jira Service Management",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Jira Service Management Data Center API",
+      "url": "https://docs.atlassian.com/jira-servicedesk/REST/5.7.1/",
+      "description": "API documentatie Jira Service Management Data Center",
+      "product": "Jira Service Management",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Product documentatie Jira Software Data Center",
+      "url": "https://confluence.atlassian.com/jirasoftwareserver/jira-software-data-center-and-server-9-7-documentation-938845020.html",
+      "description": "Product documentatie Jira Software Data Center",
+      "product": "Jira Software",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Jira Software Data Center API",
+      "url": "https://docs.atlassian.com/jira-software/REST/9.5.0/",
+      "description": "API documentatie van Jira Software Data Center",
+      "product": "Jira Software",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Jira Server API",
+      "url": "https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/",
+      "description": "API documentatie van Jira Core (projects, issues, filters etc)",
+      "product": "Jira Core",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Product documentatie Confluence Data Center",
+      "url": "https://confluence.atlassian.com/doc/confluence-data-center-documentation-135922.html",
+      "description": "Product documentatie van Confluence Data Center",
+      "product": "Confluence",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "API documentatie Confluence Data Center",
+      "url": "https://docs.atlassian.com/ConfluenceServer/rest/8.9.0/",
+      "description": "API documentatie van Confluence Data Center",
+      "product": "Confluence",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "System Administration Jira Data Center",
+      "url": "https://confluence.atlassian.com/adminjiraserver/system-administration-938847651.html",
+      "description": "System Administration Jira Data Center",
+      "product": "Jira",
+      "hosting": "Data Center"
+    },
+    {
+      "title": "Atlassian User Interface (AUI)",
+      "url": "https://aui.atlassian.com/aui/9.1/",
+      "description": "Front end documentatie volgens de Atlassian Design guidelines",
+      "product": "All",
+      "hosting": "All"
+    }
+  ]
+}

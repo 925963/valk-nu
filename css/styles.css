@@ -457,6 +457,68 @@ body {
 }
 
 /* ===================================================================
+   Data-driven documentation table (built from data/*.json)
+   =================================================================== */
+
+.doc-table-wrap {
+  overflow-x: auto;
+  margin-top: 6px;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 19px;
+}
+
+.doc-table th,
+.doc-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 7px 16px 7px 0;
+  border-bottom: 1px dashed rgba(31, 143, 61, .45);
+}
+
+.doc-table th {
+  color: var(--green-light);
+  font-weight: 400;
+  letter-spacing: 1px;
+  border-bottom: 1px dashed var(--green-dim);
+}
+
+.doc-link a {
+  color: var(--green-bright);
+  text-decoration: none;
+}
+
+.doc-link a::before {
+  content: "> ";
+  color: var(--green-dim);
+}
+
+.doc-link a:hover,
+.doc-link a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.doc-desc {
+  color: var(--green-bright);
+  opacity: .78;
+}
+
+.doc-meta {
+  color: var(--green-dim);
+  white-space: nowrap;
+}
+
+.doc-count {
+  margin: 14px 0 0;
+  font-size: 18px;
+  color: var(--green-dim);
+}
+
+/* ===================================================================
    Responsive
    =================================================================== */
 

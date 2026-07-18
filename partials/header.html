@@ -2,17 +2,15 @@
      and adds data-current to the nav item whose data-nav matches the page id. -->
 <header class="site-header">
   <div class="site-header-bar">
-    <p class="breadcrumb">
-      <a href="index.html">valk.nu</a><span class="breadcrumb-sep"> &gt; </span><span class="breadcrumb-current">{{PAGE_TITLE}}</span>
-    </p>
+    <p class="breadcrumb">{{BREADCRUMB}}</p>
     <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-dropdown">[MENU]</button>
   </div>
   <nav class="menu-dropdown" id="menu-dropdown" aria-label="Main menu" hidden>
     <p class="menu-label">$ ls /menu</p>
     <ul class="menu-list">
-      <li><a class="nav-item" data-nav="home" href="index.html">HOME</a></li>
+      <li><a class="nav-item" data-nav="home" href="{{ROOT}}index.html">HOME</a></li>
       <li><a class="nav-item" data-nav="about" href="#">ABOUT</a></li>
-      <li><a class="nav-item" data-nav="projects" href="projects.html">PROJECTS</a></li>
+      <li><a class="nav-item" data-nav="projects" href="{{ROOT}}projects.html">PROJECTS</a></li>
       <li><a class="nav-item" data-nav="blog" href="#">BLOG</a></li>
       <li><a class="nav-item" data-nav="contact" href="#">CONTACT</a></li>
     </ul>
