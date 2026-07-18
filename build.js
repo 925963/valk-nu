@@ -22,8 +22,9 @@
  *                              ("" for root pages, "../" one level deep, ...)
  *   {{BREADCRUMB}}             the header breadcrumb trail (built from the
  *                              directive: valk.nu > [parent >] current)
- *   {{DOC_TABLE:<name>}}       a terminal-style table generated from
- *                              data/<name>.json
+ *   {{TABLE:<name>}}           a terminal-style table generated from
+ *                              data/<name>.json (schema-driven: the JSON
+ *                              declares its own `columns`)
  * The build also marks the nav item whose data-nav matches `id` as current.
  */
 
@@ -98,30 +99,49 @@ function markCurrentNav(html, id, file) {
 }
 
 // Terminal-style table generated from data/<name>.json.
-function renderDocTable(name, file) {
+// The JSON declares its own layout:
+//   {
+//     "count_label": "tools",              // optional, default "entries"
+//     "columns": [
+//       { "header": "TOOL", "field": "title", "link": "url", "class": "doc-link" },
+//       { "header": "DESCRIPTION", "field": "description", "class": "doc-desc" }
+//     ],
+//     "items": [ { "title": "...", "url": "...", "description": "..." }, ... ]
+//   }
+// A column with `link` renders its `field` as an anchor to item[link].
+function renderTable(name, file) {
   const dataPath = path.join(DATA_DIR, `${name}.json`);
   if (!fs.existsSync(dataPath)) {
     console.warn(`  ! ${file}: data/${name}.json not found`);
     return `<!-- missing data/${name}.json -->`;
   }
   const data = JSON.parse(read(dataPath));
-  const rows = data.items.map((it) => (
-    '        <tr>\n' +
-    `          <td class="doc-link"><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a></td>\n` +
-    `          <td class="doc-desc">${esc(it.description || '')}</td>\n` +
-    `          <td class="doc-meta">${esc(it.product || '')}</td>\n` +
-    `          <td class="doc-meta">${esc(it.hosting || '')}</td>\n` +
-    '        </tr>'
-  )).join('\n');
+  const cols = data.columns || [];
+  if (!cols.length) console.warn(`  ! ${name}.json: no "columns" declared`);
+
+  const thead = cols.map((c) => `<th>${esc(c.header || '')}</th>`).join('');
+  const rows = data.items.map((it) => {
+    const tds = cols.map((c) => {
+      const cls = c.class ? ` class="${c.class}"` : '';
+      let val = esc(it[c.field] != null ? it[c.field] : '');
+      if (c.link && it[c.link]) {
+        val = `<a href="${esc(it[c.link])}" target="_blank" rel="noopener">${val}</a>`;
+      }
+      return `<td${cls}>${val}</td>`;
+    }).join('');
+    return `        <tr>${tds}</tr>`;
+  }).join('\n');
+
+  const unit = data.count_label || 'entries';
   return (
     '<div class="doc-table-wrap">\n' +
     '      <table class="doc-table">\n' +
-    '        <thead><tr><th>LINK</th><th>BESCHRIJVING</th><th>PRODUCT</th><th>HOSTING</th></tr></thead>\n' +
+    `        <thead><tr>${thead}</tr></thead>\n` +
     '        <tbody>\n' +
     rows + '\n' +
     '        </tbody>\n' +
     '      </table>\n' +
-    `    </div>\n    <p class="doc-count">// ${data.items.length} entries</p>`
+    `    </div>\n    <p class="doc-count">// ${data.items.length} ${unit}</p>`
   );
 }
 
@@ -146,7 +166,7 @@ function build() {
     html = html.replace('<!--@footer-->', () => footer);
 
     // Data-driven tables.
-    html = html.replace(/\{\{DOC_TABLE:([\w-]+)\}\}/g, (_, name) => renderDocTable(name, rel));
+    html = html.replace(/\{\{TABLE:([\w-]+)\}\}/g, (_, name) => renderTable(name, rel));
 
     // Resolve relative paths for this page's depth (must run last).
     html = html.replace(/\{\{ROOT\}\}/g, rootPrefix(rel));

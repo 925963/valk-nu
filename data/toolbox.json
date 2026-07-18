@@ -1,0 +1,52 @@
+{
+  "count_label": "tools",
+  "columns": [
+    { "header": "CATEGORY", "field": "category", "class": "doc-meta" },
+    { "header": "TOOL", "field": "title", "link": "url", "class": "doc-link" },
+    { "header": "DESCRIPTION", "field": "description", "class": "doc-desc" }
+  ],
+  "items": [
+    {
+      "category": "Coding",
+      "title": "The Zen of Python",
+      "description": "PEP 20 – the Zen of Python",
+      "url": "https://peps.python.org/pep-0020/"
+    },
+    {
+      "category": "Design",
+      "title": "Adobe color wheel",
+      "description": "create color palletes",
+      "url": "https://color.adobe.com/create/color-wheel"
+    },
+    {
+      "category": "Design",
+      "title": "Caligrapher",
+      "description": "turn your handwriting into a font",
+      "url": "https://www.calligraphr.com/en/"
+    },
+    {
+      "category": "Misc",
+      "title": "Johnny Webber Links",
+      "description": "Various curated links by Johnny Webber",
+      "url": "https://johnnywebber.com/"
+    },
+    {
+      "category": "Security",
+      "title": "PimEyes",
+      "description": "Search for images of a person",
+      "url": "https://pimeyes.com/en"
+    },
+    {
+      "category": "Security",
+      "title": "Red Sift Certificates Lite",
+      "description": "Free monitoring of certificate expiration",
+      "url": "https://redsift.com/pulse-platform/certificates-lite"
+    },
+    {
+      "category": "Security",
+      "title": "ShieldsUp",
+      "description": "UPnP port scanning service by GRC",
+      "url": "https://www.grc.com/x/ne.dll?rh1dkyd2"
+    }
+  ]
+}

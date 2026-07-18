@@ -16,11 +16,13 @@ pages/            # SOURCE templates (edit these); subfolders map to URLs
   projects.html   #   projects id="projects"
   projects/
     atlassian-documentation.html   # -> /projects/atlassian-documentation.html
+    toolbox.html                   # -> /projects/toolbox.html
 partials/         # shared chrome injected at build time
   header.html     #   compact breadcrumb bar + collapsible nav dropdown
   footer.html     #   social row + READY> status
 data/             # JSON that feeds data-driven pages
-  atlassian-documentation.json     # the doc-link table rows
+  atlassian-documentation.json     # doc-link table (columns + items)
+  toolbox.json                     # toolbox table (columns + items)
 build.js          # stitches partials + data into pages/ -> repo root
 
 index.html                          # GENERATED — do not edit by hand
@@ -54,9 +56,24 @@ Each template starts with a directive that drives the shared header:
 - The build injects the partials at `<!--@header-->` / `<!--@footer-->`.
 - `{{ROOT}}` in any template/partial resolves to the correct relative prefix
   for that page's depth, so pages in subfolders link correctly.
-- `{{DOC_TABLE:<name>}}` renders a terminal-style table from
-  `data/<name>.json` (each item: `title`, `url`, `description`, `product`,
-  `hosting`). Edit the JSON and re-run the build to update the table.
+- `{{TABLE:<name>}}` renders a terminal-style table from `data/<name>.json`.
+  The JSON is schema-driven — it declares its own `columns`, so the same token
+  works for any dataset:
+
+  ```json
+  {
+    "count_label": "tools",
+    "columns": [
+      { "header": "CATEGORY", "field": "category", "class": "doc-meta" },
+      { "header": "TOOL", "field": "title", "link": "url", "class": "doc-link" },
+      { "header": "DESCRIPTION", "field": "description", "class": "doc-desc" }
+    ],
+    "items": [ { "category": "...", "title": "...", "url": "...", "description": "..." } ]
+  }
+  ```
+
+  A column with `link` renders its `field` as a link to `item[link]`. Rows
+  render in JSON order — reorder/add items in the JSON and re-run the build.
 
 The generated `*.html` files are committed so GitHub Pages can serve them
 directly (no CI required); re-run `node build.js` and commit after any change.

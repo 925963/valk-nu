@@ -1,4 +1,11 @@
 {
+  "count_label": "entries",
+  "columns": [
+    { "header": "LINK", "field": "title", "link": "url", "class": "doc-link" },
+    { "header": "BESCHRIJVING", "field": "description", "class": "doc-desc" },
+    { "header": "PRODUCT", "field": "product", "class": "doc-meta" },
+    { "header": "HOSTING", "field": "hosting", "class": "doc-meta" }
+  ],
   "items": [
     {
       "title": "Overzicht product documentatie",
