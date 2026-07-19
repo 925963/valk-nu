@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VALK.NU // BLOG</title>
-  <meta name="description" content="valk.nu — blog.">
+  <title>VALK.NU // ABOUT</title>
+  <meta name="description" content="About Rik — Principal Consultant at Brainboss, an Atlassian Gold Solution Partner in Utrecht.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -14,34 +14,40 @@
   <div class="page">
     <header class="site-header">
   <div class="site-header-bar">
-    <p class="breadcrumb"><a href="index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">blog</span></p>
+    <p class="breadcrumb"><a href="index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">about</span></p>
     <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-dropdown">[MENU]</button>
   </div>
   <nav class="menu-dropdown" id="menu-dropdown" aria-label="Main menu" hidden>
     <p class="menu-label">$ ls /menu</p>
     <ul class="menu-list">
       <li><a class="nav-item" data-nav="home" href="index.html">HOME</a></li>
-      <li><a class="nav-item" data-nav="about" href="about.html">ABOUT</a></li>
+      <li><a class="nav-item" data-nav="about" data-current href="about.html">ABOUT</a></li>
       <li><a class="nav-item" data-nav="projects" href="projects.html">PROJECTS</a></li>
-      <li><a class="nav-item" data-nav="blog" data-current href="blog.html">BLOG</a></li>
+      <li><a class="nav-item" data-nav="blog" href="blog.html">BLOG</a></li>
       <li><a class="nav-item" data-nav="contact" href="contact.html">CONTACT</a></li>
     </ul>
   </nav>
 </header>
 
 
-    <main class="terminal panel" aria-label="Blog">
+    <main class="terminal panel" aria-label="About">
       <div class="crt-overlay" aria-hidden="true"></div>
       <div class="terminal-inner">
 
         <header class="header">
-          <h1 class="title">BLOG</h1>
+          <h1 class="title">ABOUT</h1>
         </header>
         <hr class="divider">
 
-        <p class="menu-label">$ ls -l ~/blog</p>
-        <p class="blog-total">total 0</p>
-        <p class="blog-empty">// If I ever have time…<span class="cursor">_</span></p>
+        <p class="menu-label">$ cat about.txt</p>
+
+        <div class="about-text">
+          <p>Rik — Principal Consultant at Brainboss, an Atlassian Gold Solution Partner in Utrecht. I help enterprise and public sector teams get Agile at Scale, Lean portfolio management and service management actually working in Jira.</p>
+          <p>Outside of that: building apps, tinkering with Obsidian, photography, and my home improvement projects. Home is in the Netherlands, alongside my Australian Shepherd, Jax and my family.</p>
+          <p>This site is where the tinkering lives.</p>
+        </div>
+
+        <p class="about-prompt">$ <span class="cursor">_</span></p>
 
       </div>
     </main>
