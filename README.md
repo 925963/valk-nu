@@ -97,11 +97,11 @@ Each template starts with a directive that drives the shared header:
   `completed`) from `data/atlassian-features.json`.
 - `crumbs="label=url|label=url"` in the directive builds a multi-level
   breadcrumb (URLs are site-root-relative; `{{ROOT}}` is applied per page).
-- `base="/valk-nu/"` in the directive forces `{{ROOT}}` to an absolute base
-  instead of a relative prefix. Used by `404.html`, which GitHub Pages serves
-  for unmatched URLs at any depth (relative paths would break). If the site
-  moves to a root custom domain, change this (and the CSS/JS link comments) to
-  `base="/"`.
+- `base="/"` in the directive forces `{{ROOT}}` to an absolute base instead of
+  a relative prefix. Used by `404.html`, which GitHub Pages serves for unmatched
+  URLs at any depth (relative paths would break). The site is served at the
+  `valk.nu` root via CNAME, so the base is `/`; if it ever moves back to a
+  project subpath, set `base="/valk-nu/"`.
 
 ## Atlassian features tracker
 

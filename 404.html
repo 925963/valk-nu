@@ -9,11 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <!-- /valk-nu/ is an absolute base ("/valk-nu/") so assets resolve for any
-       unmatched URL depth. Change it to "/" if the site moves to a root domain. -->
-  <link rel="stylesheet" href="/valk-nu/css/styles.css">
+  <!-- / is an absolute base ("/") so assets resolve for any unmatched
+       URL depth (the site is served at the valk.nu root via CNAME). If it ever
+       moves back to a project subpath, set base="/valk-nu/" in the directive. -->
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body class="nf-page" data-base="/valk-nu/">
+<body class="nf-page" data-base="/">
   <div class="nf-overlay" aria-hidden="true"></div>
 
   <main class="notfound" aria-label="404 — page not found">
@@ -32,10 +33,10 @@
     <div class="nf-recover">
       <div class="nf-label">$ ./recover.sh --suggest</div>
       <div class="nf-cmds">
-        <a class="nf-cmd" href="/valk-nu/index.html">&gt; cd ~          <span class="nf-cmt">// back to home base</span></a>
-        <a class="nf-cmd" href="/valk-nu/about.html">&gt; cat about.txt <span class="nf-cmt">// who even are you</span></a>
-        <a class="nf-cmd" href="/valk-nu/projects.html">&gt; ls projects/  <span class="nf-cmt">// stuff I've built</span></a>
-        <a class="nf-cmd" href="/valk-nu/contact.html">&gt; ./contact.exe <span class="nf-cmt">// yell into the void (email only)</span></a>
+        <a class="nf-cmd" href="/index.html">&gt; cd ~          <span class="nf-cmt">// back to home base</span></a>
+        <a class="nf-cmd" href="/about.html">&gt; cat about.txt <span class="nf-cmt">// who even are you</span></a>
+        <a class="nf-cmd" href="/projects.html">&gt; ls projects/  <span class="nf-cmt">// stuff I've built</span></a>
+        <a class="nf-cmd" href="/contact.html">&gt; ./contact.exe <span class="nf-cmt">// yell into the void (email only)</span></a>
       </div>
     </div>
 
@@ -48,6 +49,6 @@
 
   </main>
 
-  <script src="/valk-nu/js/notfound.js"></script>
+  <script src="/js/notfound.js"></script>
 </body>
 </html>

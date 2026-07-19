@@ -1,4 +1,4 @@
-<!--@page id="404" title="404" base="/valk-nu/"-->
+<!--@page id="404" title="404" base="/"-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-  <!-- {{ROOT}} is an absolute base ("/valk-nu/") so assets resolve for any
-       unmatched URL depth. Change it to "/" if the site moves to a root domain. -->
+  <!-- {{ROOT}} is an absolute base ("/") so assets resolve for any unmatched
+       URL depth (the site is served at the valk.nu root via CNAME). If it ever
+       moves back to a project subpath, set base="/valk-nu/" in the directive. -->
   <link rel="stylesheet" href="{{ROOT}}css/styles.css">
 </head>
 <body class="nf-page" data-base="{{ROOT}}">
