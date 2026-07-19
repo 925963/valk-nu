@@ -50,14 +50,17 @@
 
         <p class="menu-label">$ query features --new-this-week</p>
 
-        <p class="ft-meta">// week of 9 Mar 2026 — 255 new feature(s)</p>
-    <h3 class="ft-product">Assets</h3>
+        <span id="ft-top"></span>
+    <p class="ft-meta">// week of 9 Mar 2026 — 255 new feature(s) across 13 products</p>
+    <nav class="ft-jump" aria-label="Jump to product">jump to: <a href="#prod-assets">Assets</a> · <a href="#prod-atlassian-administration">Atlassian Administration</a> · <a href="#prod-bitbucket">Bitbucket</a> · <a href="#prod-compass">Compass</a> · <a href="#prod-confluence">Confluence</a> · <a href="#prod-customer-service-management">Customer Service Management</a> · <a href="#prod-focus">Focus</a> · <a href="#prod-jira-product-discovery">Jira Product Discovery</a> · <a href="#prod-jira-service-management">Jira Service Management</a> · <a href="#prod-jira-platform">Jira platform</a> · <a href="#prod-loom">Loom</a> · <a href="#prod-rovo">Rovo</a> · <a href="#prod-talent">Talent</a></nav>
+    <h3 class="ft-product" id="prod-assets">Assets</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Advanced AQL filtering across schemas in Assets</a> <span class="ft-li-desc">— You can now use an Advanced AQL filter tab in Assets for Jira Service Management to search across all object types within a schema. This update gives you more flexibility and precision when finding objects, saving time and improving your search experience. To get started with th…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Assets is now a standalone platform app</a> <span class="ft-li-desc">— To ensure we give our customers a seamless and secure experience, we're moving Assets from Jira Service Management as its own platform app in Atlassian Administration. Here, you can assign specific roles to people as well as manage billing and data residency. Existing permission…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Data residency support for standalone Assets</a> <span class="ft-li-desc">— Administrators can now manage data residency for the standalone Assets app in Atlassian Administration. When you move any Jira family app, Assets will move with it, giving you more control over where your data is stored. (Data residency can only start with Jira.) To get started…</span></li>
     </ul>
-    <h3 class="ft-product">Atlassian Administration</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-atlassian-administration">Atlassian Administration</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Access media assets securely with IP allowlist restrictions</a> <span class="ft-li-desc">— We’re introducing IP allowlist restrictions for media asset domains. Only IP addresses on your organization’s allowlist will be able to access media assets (attachments, images, and videos) hosted on media-cdn.atlassian.com and api.media.atlassian.com. If you use third-party sec…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Access policies: Block mobile browser access</a> <span class="ft-li-desc">— Atlassian Guard now allows organization admins to block access to Atlassian apps from mobile browsers. This new condition-based policy helps you enhance security by ensuring users only access organization content through approved methods, such as Atlassian mobile apps or desktop…</span></li>
@@ -89,19 +92,22 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Soft delete for Marketplace apps</a> <span class="ft-li-desc">— We are introducing a soft delete feature for Marketplace apps on sites using cloud commerce platform billing and Forge apps. This update changes how you can uninstall, unsubscribe, or stop trials for Marketplace apps, providing more control and clarity during the removal process.</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">UI improvements to the Audit log page</a> <span class="ft-li-desc">— We’ve introduced some UI improvements to the Audit log page to give you a consistent and reliable way to review audit events across your organization. To see the new UI improvements: Go to Atlassian Administration. Select your organization if you have more than one. Select Insig…</span></li>
     </ul>
-    <h3 class="ft-product">Bitbucket</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-bitbucket">Bitbucket</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Import pipeline configuration files from repositories</a> <span class="ft-li-desc">— You can now define and import pipeline configurations files from other YAML files, either within the same repository or from repositories in the same workspace. This helps you better organize, reuse, and manage your pipeline definitions. To import pipeline configuration files fr…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">New dynamic step condition in Bitbucket Pipelines</a> <span class="ft-li-desc">— You can now use the new state step condition to control whether a step should run, based on a boolean expression using context variables. Both state and changesets conditions are now evaluated right before each step starts, giving you a consistent and flexible way to manage step…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Pipeline variables: Limits on count and size</a> <span class="ft-li-desc">— Bitbucket now enforces limits on the number and size of pipeline variables, helping teams maintain efficient and reliable pipelines. This change ensures that pipeline configurations remain manageable and reduces the risk of errors caused by excessive or oversized variables. To g…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Test management in Bitbucket Pipelines</a> <span class="ft-li-desc">— Bitbucket Cloud now offers test management features in Bitbucket Pipelines (Standard, Premium, and Enterprise only). You can organize, track, and analyze your test cases with execution summaries, metrics, and tools to manage flaky or quarantined tests. This helps teams improve b…</span></li>
     </ul>
-    <h3 class="ft-product">Compass</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-compass">Compass</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Access media assets securely with IP allowlist restrictions</a> <span class="ft-li-desc">— We’re introducing IP allowlist restrictions for media asset domains. Only IP addresses on your organization’s allowlist will be able to access media assets (attachments, images, and videos) hosted on media-cdn.atlassian.com and api.media.atlassian.com. If you use third-party sec…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Atlassian Rovo MCP Server is now generally available</a> <span class="ft-li-desc">— The Atlassian Rovo Model Context Protocol (MCP) Server is now GA for Jira, Confluence, and Compass. It lets AI tools and IDEs securely read and write Atlassian Cloud data using the MCP, with enterprise‑grade controls, including domain allowlists, IP allowlist support, and audit…</span></li>
     </ul>
-    <h3 class="ft-product">Confluence</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-confluence">Confluence</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">'Ask to edit' button in Share dialog</a> <span class="ft-li-desc">— You can now easily request editing access to any Confluence content when you have view-only permissions. You'll see a new Ask to edit button in the Share dialog, making it simple to request edit rights for pages, live docs, whiteboards, databases, and blogs. This update helps yo…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">A faster way to narrow your search with more filters</a> <span class="ft-li-desc">— You can now use more filters in the search field to help you narrow your search results. This update introduces additional filtering options, making it easier to find the content you need. To use the new filters in Confluence's main search field: Open Confluence. Select the main…</span></li>
@@ -164,11 +170,13 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">The number of search results for projects, web pages and goals is now visible across Atlassian apps</a> <span class="ft-li-desc">— When using the search feature in Atlassian apps, such as Jira and Confluence, you can now view the specific number of results for projects, goals, and web pages. This update brings consistency and clarity to your search experience, helping you to easily categorize your search re…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Updates to version history for Confluence pages</a> <span class="ft-li-desc">— The new version history experience in Confluence offers a modern interface for viewing, comparing, and managing page versions. Users can easily review previous versions, compare changes, delete or restore versions - and, if Rovo is enabled - ask AI to summarize version history.…</span></li>
     </ul>
-    <h3 class="ft-product">Customer Service Management</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-customer-service-management">Customer Service Management</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Amazon Connect voice channel in Customer Service Management</a> <span class="ft-li-desc">— You can now add voice call support via Amazon Connect in Customer Service Management. With the Amazon Connect integration, your team can: offer voice alongside existing channels like email, forms, and chat</span></li>
     </ul>
-    <h3 class="ft-product">Focus</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-focus">Focus</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Atlassian Projects is now a standalone app</a> <span class="ft-li-desc">— Projects is now available as a platform app, meaning it's no longer a part of Atlassian Home. You can access it directly from the App Switcher in the top-left corner of any Atlassian app and add it to your app shortcuts. To find and use the Projects app: Select the app switcher…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Column sorting for the work table</a> <span class="ft-li-desc">— You can now sort columns in the work table, making it easier to organize and find information. This improvement helps you quickly arrange your data in the way that works best for you. Open the Focus app. Navigate to your focus area. Select the work tab Select the sort icon in an…</span></li>
@@ -176,7 +184,8 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">View Talent funds data in the positions tab</a> <span class="ft-li-desc">— Organizations using Focus and Talent can now view Talent funds and labor rate data directly in the Positions tab of Focus. This feature requires labor rates to be configured in Talent, and provides greater visibility into funds data for improved workforce planning. Explore more…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">View work metrics across all sub-focus areas</a> <span class="ft-li-desc">— When you view work metrics in your dashboard, you can now see a comprehensiveness roll-up view of linked work items across all focus areas. You can also view historical trends between all linked work items (including sub-focus areas) and directly linked items. To comprehensively…</span></li>
     </ul>
-    <h3 class="ft-product">Jira Product Discovery</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-jira-product-discovery">Jira Product Discovery</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Add global fields from any view</a> <span class="ft-li-desc">— Adding global fields to your Jira Product Discovery spaces is now faster and more intuitive. You can add global fields directly from any view to achieve consistency across spaces and reduce setup time. When creating new space fields, you can see suggestions for existing global f…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Add highlighted fields for your connections (Premium only)</a> <span class="ft-li-desc">— You can now add highlighted fields for connections directly from the Fields settings in Jira Product Discovery views. To display additional field values alongside your connections, choose the field to highlight based on the most useful data for your team. To add a highlighted fi…</span></li>
@@ -192,7 +201,8 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Run manually triggered automations from the idea view</a> <span class="ft-li-desc">— Jira Product Discovery now supports running manually triggered automations directly from the idea view. Once a space admin creates automation rules with a manual trigger, those rules become available to run on demand for any idea. To run an automation rule: In your Jira Product…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Updated layouts for idea views</a> <span class="ft-li-desc">— The idea layout in Jira Product Discovery is now more consistent across the side panel and full view. In full view, all tabs are now at the top together with an added Overview tab to match the side panel structure. Action buttons for Attachments, Link work item, and Templates ap…</span></li>
     </ul>
-    <h3 class="ft-product">Jira Service Management</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-jira-service-management">Jira Service Management</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">A better way to improve descriptions with Google Docs links</a> <span class="ft-li-desc">— You can now use Google Docs links when improving work item descriptions. This update makes it easier to bring in content from your favorite document tool to help you write better work item descriptions. To use Google Docs links in the description improver: Open a work item where…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">A more detailed way to filter by status in Jira Rovo search</a> <span class="ft-li-desc">— You can now filter work items in Jira search using more granular status options. This update gives you finer control when narrowing down your search results by status. To use the new granular status filter in Jira search: Go to Jira and open the search experience for work items.…</span></li>
@@ -235,7 +245,8 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Signal and noise classification for unified alert list</a> <span class="ft-li-desc">— Jira Service Management Premium and Enterprise customers with Atlassian Intelligence enabled can now see alerts and alert groups classified as signal or noise in the unified alert list. This helps teams focus on the most important incidents and reduce alert fatigue. To get start…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Star a saved search for operation alerts</a> <span class="ft-li-desc">— You can now star a saved search for operation alerts, making it easier to access your most important filters directly from the side menu. This helps you quickly find and manage critical alerts. Go to the side menu. Find your saved search for operation alerts. Select the star ico…</span></li>
     </ul>
-    <h3 class="ft-product">Jira platform</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-jira-platform">Jira platform</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">A better way to improve descriptions with Google Docs links</a> <span class="ft-li-desc">— You can now use Google Docs links when improving work item descriptions. This update makes it easier to bring in content from your favorite document tool to help you write better work item descriptions. To use Google Docs links in the description improver: Open a work item where…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">A clearer way to see which work items are counted as completed on sprint boards</a> <span class="ft-li-desc">— A checklist icon now appears in the header of the last column on software boards with sprints enabled. This icon helps clarify which work items will be counted as completed when a sprint ends. The same icon is also visible on the Column Status Mapping Settings pages. To see the…</span></li>
@@ -318,12 +329,14 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Whiteboards smart sections: update multiple Jira fields at once</a> <span class="ft-li-desc">— Confluence whiteboards now let you update multiple Jira fields in a single smart section. This makes it easier to manage and organize Jira work items directly from your whiteboard, saving time and reducing manual effort. To get started with this change: Open a premium-enabled Co…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Workflow editor: Load and publish changes from old editor drafts</a> <span class="ft-li-desc">— The new workflow editor in Jira now allows you to load changes from your old editor drafts, which you can review and publish without leaving the new editor. You can then continue making changes directly to the active workflow in the new editor without needing to manage separate…</span></li>
     </ul>
-    <h3 class="ft-product">Loom</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-loom">Loom</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Streamlined Loom onboarding for first-time users</a> <span class="ft-li-desc">— The Loom onboarding experience in Jira and Confluence now guides eligible first-time users through only the essential steps, making it easier to grant camera and microphone permissions and start recording. This update helps users complete their first recording faster and with le…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Super reactions for video player</a> <span class="ft-li-desc">— Users can now create super reactions—larger, more exciting emojis—directly on the video player. This feature enhances engagement and makes interactions more expressive for everyone watching videos. To get started with this change: Open a video in the video player. Select the emo…</span></li>
     </ul>
-    <h3 class="ft-product">Rovo</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-rovo">Rovo</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Charts shared are now embedded and interactive by default</a> <span class="ft-li-desc">— When you share a Rovo-generated data chart in your content, it will now automatically appear as an embedded chart instead of a simple link. This makes it easier for everyone to view and interact with shared charts directly in their content. To see embedded charts: Prompt Rovo wi…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Connect third-party apps to expand search and chat</a> <span class="ft-li-desc">— Eligible users in Confluence and Jira can now connect third-party apps through Rovo, making it easier to search and chat across more content and conversations. This update helps you get more relevant results and insights in Rovo Search and Chat. To get started with this change:…</span></li>
@@ -340,11 +353,13 @@
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Thinking indicator improvements in Rovo Chat</a> <span class="ft-li-desc">— The thinking indicator in Rovo Chat now displays more consistently and at the correct step across Confluence, Jira, and other supported apps. This update ensures a smoother and clearer AI chat experience for users in Confluence Premium and Enterprise with AI enabled. Open Conflu…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Verify Rovo agents in your organization</a> <span class="ft-li-desc">— If you’re an organization admin, you can give a verified status to Rovo agents. Adding a verified status helps users to identify that the agent is safe, supported, and accurate within your organization. Agents with a verified status will be surfaced in Rovo Search and Chat, as w…</span></li>
     </ul>
-    <h3 class="ft-product">Talent</h3>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
+    <h3 class="ft-product" id="prod-talent">Talent</h3>
     <ul class="ft-list">
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">Talent integrated with Atlassian global search</a> <span class="ft-li-desc">— Talent is now integrated into Atlassian global search, making it easier to find Talent-related information across your Atlassian apps. This enhancement helps you quickly locate Talent content from across the enterprise platform. It also enables the global search capability withi…</span></li>
       <li><a href="https://confluence.atlassian.com/cloud/blog/2026/03/atlassian-cloud-changes-mar-9-to-mar-16-2026" target="_blank" rel="noopener">View Talent funds data in the positions tab</a> <span class="ft-li-desc">— Organizations using Focus and Talent can now view Talent funds and labor rate data directly in the Positions tab of Focus. This feature requires labor rates to be configured in Talent, and provides greater visibility into funds data for improved workforce planning. Explore more…</span></li>
     </ul>
+    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>
 
       </div>
     </main>
@@ -359,6 +374,7 @@
   <p class="footer-status">READY&gt;<span class="cursor">_</span></p>
 </footer>
 <script src="../../js/nav.js"></script>
+<script src="../../js/pagination.js"></script>
 
   </div>
 </body>

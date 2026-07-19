@@ -641,6 +641,72 @@ body {
 
 .ft-li-desc { color: var(--green-bright); opacity: .7; }
 
+/* Product jump menu + back-to-top (new this week) */
+.ft-jump {
+  margin: 2px 0 16px;
+  font-size: 19px;
+  line-height: 1.7;
+  color: var(--green-dim);
+}
+
+.ft-jump a { color: var(--green-bright); text-decoration: none; }
+.ft-jump a:hover,
+.ft-jump a:focus-visible { text-decoration: underline; outline: none; }
+.ft-jump a:visited { color: var(--green-bright); }
+
+.ft-product { scroll-margin-top: 16px; }
+#ft-top { display: block; scroll-margin-top: 16px; }
+
+.ft-backtop {
+  display: inline-block;
+  margin: 10px 0 2px;
+  font-size: 18px;
+  color: var(--green-dim);
+  text-decoration: none;
+}
+
+.ft-backtop:hover,
+.ft-backtop:focus-visible { color: var(--green-bright); text-decoration: underline; outline: none; }
+.ft-backtop:visited { color: var(--green-dim); }
+
+/* Table pagination controls */
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 12px 0;
+  font-size: 19px;
+  color: var(--green-dim);
+}
+
+.pager button {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  background: #000;
+  color: var(--green-bright);
+  border: 1px solid var(--green-dim);
+  padding: 3px 8px;
+  cursor: pointer;
+}
+
+.pager button:hover:not(:disabled),
+.pager button:focus-visible { border-color: var(--green-bright); outline: none; }
+.pager button:disabled { color: var(--green-dim); opacity: .4; cursor: default; }
+
+.pager-input {
+  width: 3.2em;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  background: #000;
+  color: var(--green-bright);
+  border: 1px solid var(--green-dim);
+  text-align: center;
+  padding: 2px 4px;
+}
+
+.pager-status { color: var(--green-dim); }
+
 /* How-this-works prose */
 .ft-doc { font-size: 20px; line-height: 1.5; }
 .ft-doc p { margin: 0 0 12px; }

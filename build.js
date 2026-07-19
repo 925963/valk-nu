@@ -170,6 +170,10 @@ const STATUS_TAG = {
   released: 'RELEASED',
 };
 
+function slug(s) {
+  return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 function fmtDate(d) {
   if (!d) return '—';
@@ -223,7 +227,7 @@ function featuresTable(list, withStatus) {
     return `        <tr>${link}${prod}${status}${ann}</tr>`;
   }).join('\n');
   return (
-    '<div class="doc-table-wrap">\n' +
+    '<div class="doc-table-wrap" data-paginate="50">\n' +
     '      <table class="doc-table">\n' +
     `        <thead>${head}</thead>\n` +
     '        <tbody>\n' + rows + '\n        </tbody>\n' +
@@ -258,17 +262,27 @@ function renderFeaturesView(view) {
       .sort((a, b) => (a.product || '').localeCompare(b.product || '') || (a.title || '').localeCompare(b.title || ''));
     const byProduct = {};
     for (const f of list) (byProduct[f.product] = byProduct[f.product] || []).push(f);
-    const sections = Object.keys(byProduct).sort().map((prod) => {
+    const products = Object.keys(byProduct).sort();
+
+    const jump = products.length
+      ? `<nav class="ft-jump" aria-label="Jump to product">jump to: ${products
+          .map((p) => `<a href="#prod-${slug(p)}">${esc(p)}</a>`).join(' · ')}</nav>`
+      : '';
+
+    const sections = products.map((prod) => {
       const items = byProduct[prod].map((f) => {
         const d = f.description ? ` <span class="ft-li-desc">— ${esc(f.description)}</span>` : '';
         return `      <li><a href="${esc(f.source_url)}" target="_blank" rel="noopener">${esc(f.title)}</a>${d}</li>`;
       }).join('\n');
-      return `    <h3 class="ft-product">${esc(prod)}</h3>\n    <ul class="ft-list">\n${items}\n    </ul>`;
+      return `    <h3 class="ft-product" id="prod-${slug(prod)}">${esc(prod)}</h3>\n` +
+        `    <ul class="ft-list">\n${items}\n    </ul>\n` +
+        `    <a class="ft-backtop" href="#ft-top">[ back to top ]</a>`;
     }).join('\n');
+
     const header = latest
-      ? `<p class="ft-meta">// week of ${fmtDate(latest)} — ${list.length} new feature(s)</p>`
+      ? `<p class="ft-meta">// week of ${fmtDate(latest)} — ${list.length} new feature(s) across ${products.length} products</p>`
       : '<p class="ft-meta">// nothing new.</p>';
-    return `${header}\n${sections || '    <p class="ft-meta">// nothing new this week.</p>'}`;
+    return `<span id="ft-top"></span>\n    ${header}\n    ${jump}\n${sections || '    <p class="ft-meta">// nothing new this week.</p>'}`;
   }
 
   const st = STATUS_OF_VIEW[view];

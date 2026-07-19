@@ -43,6 +43,7 @@ css/styles.css    # green-phosphor terminal styling (design option 1c)
 js/game.js        # platformer engine (window.createGame)
 js/main.js        # wires the engine to canvas + keyboard/touch controls
 js/nav.js         # header menu-dropdown toggle
+js/pagination.js  # client-side pagination for [data-paginate] tables
 avatar-rik.png    # portrait asset (tinted green via CSS)
 ```
 
