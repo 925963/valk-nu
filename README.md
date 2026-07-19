@@ -15,6 +15,7 @@ pages/            # SOURCE templates (edit these); subfolders map to URLs
   index.html      #   home id="home"
   blog.html       #   blog id="blog" (placeholder)
   contact.html    #   contact id="contact" (animated boot sequence)
+  404.html        #   not-found id="404" (base="/valk-nu/", standalone)
   projects.html   #   projects id="projects"
   projects/
     atlassian-documentation.html   # -> /projects/atlassian-documentation.html
@@ -46,6 +47,7 @@ js/game.js        # platformer engine (window.createGame)
 js/main.js        # wires the engine to canvas + keyboard/touch controls
 js/nav.js         # header menu-dropdown toggle
 js/contact.js     # contact page boot-sequence animation (contact.html only)
+js/notfound.js    # 404 page: glitch cycle, fact reroll, requested-path inject
 js/pagination.js  # client-side search ([data-search]) + pagination
                   #   ([data-paginate]); search filters across all pages
 avatar-rik.png    # portrait asset (tinted green via CSS)
@@ -95,6 +97,11 @@ Each template starts with a directive that drives the shared header:
   `completed`) from `data/atlassian-features.json`.
 - `crumbs="label=url|label=url"` in the directive builds a multi-level
   breadcrumb (URLs are site-root-relative; `{{ROOT}}` is applied per page).
+- `base="/valk-nu/"` in the directive forces `{{ROOT}}` to an absolute base
+  instead of a relative prefix. Used by `404.html`, which GitHub Pages serves
+  for unmatched URLs at any depth (relative paths would break). If the site
+  moves to a root custom domain, change this (and the CSS/JS link comments) to
+  `base="/"`.
 
 ## Atlassian features tracker
 

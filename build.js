@@ -310,11 +310,15 @@ function build() {
 
     let html = src.replace(raw, '').replace(/^\s*\n/, '');
 
-    // Inject shared chrome.
-    let head = header.replace('{{BREADCRUMB}}', () => buildBreadcrumb(attrs));
-    head = markCurrentNav(head, attrs.id, rel);
-    html = html.replace('<!--@header-->', () => head);
-    html = html.replace('<!--@footer-->', () => footer);
+    // Inject shared chrome where the placeholders exist (the 404 page opts out).
+    if (html.includes('<!--@header-->')) {
+      let head = header.replace('{{BREADCRUMB}}', () => buildBreadcrumb(attrs));
+      head = markCurrentNav(head, attrs.id, rel);
+      html = html.replace('<!--@header-->', () => head);
+    }
+    if (html.includes('<!--@footer-->')) {
+      html = html.replace('<!--@footer-->', () => footer);
+    }
 
     // Data-driven tables.
     html = html.replace(/\{\{TABLE:([\w-]+)\}\}/g, (_, name) => renderTable(name, rel));
@@ -323,8 +327,11 @@ function build() {
     html = html.replace(/\{\{TRACKER_NAV:([\w-]+)\}\}/g, (_, v) => renderTrackerNav(v));
     html = html.replace(/\{\{FEATURES:([\w-]+)\}\}/g, (_, v) => renderFeaturesView(v));
 
-    // Resolve relative paths for this page's depth (must run last).
-    html = html.replace(/\{\{ROOT\}\}/g, rootPrefix(rel));
+    // Resolve {{ROOT}} last. Normally the relative prefix for this page's
+    // depth; a `base` directive forces an absolute base instead — needed for
+    // 404.html, which GitHub Pages serves for unmatched URLs at any depth.
+    const rootVal = attrs.base !== undefined ? attrs.base : rootPrefix(rel);
+    html = html.replace(/\{\{ROOT\}\}/g, rootVal);
 
     const leftover = html.match(/\{\{[^}]+\}\}/);
     if (leftover) console.warn(`  ! ${rel}: unfilled placeholder ${leftover[0]}`);

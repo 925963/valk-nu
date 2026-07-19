@@ -753,6 +753,93 @@ body {
 .about-prompt { margin: 8px 0 0; font-size: 20px; }
 
 /* ===================================================================
+   404 / not found (SEGFAULT.SYS)
+   =================================================================== */
+
+body.nf-page { padding: 0; }
+
+.nf-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background:
+    repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 1px, rgba(0, 0, 0, .25) 2px),
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .55) 100%);
+}
+
+.notfound {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  animation: flicker 6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notfound { animation: none; }
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(2px, -1px); }
+  50%  { transform: translate(-2px, 1px); }
+  75%  { transform: translate(1px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+.nf-error {
+  border: 1px solid #e6483c;
+  padding: 22px 24px;
+  box-shadow: 0 0 18px rgba(230, 72, 60, .15);
+}
+
+.nf-trace { font-size: 19px; line-height: 1.6; color: #e6483c; }
+
+.nf-glitch {
+  margin: 16px 0;
+  font-size: 16px;
+  line-height: 1.15;
+  color: #e6483c;
+  animation: drift .15s infinite steps(2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf-glitch { animation: none; }
+}
+
+.nf-flavor { font-size: 17px; opacity: .85; }
+
+.nf-recover,
+.nf-facts {
+  border: 1px solid var(--green-dim);
+  padding: 20px 24px;
+  margin-top: 16px;
+}
+
+.nf-label { font-size: 17px; opacity: .75; margin-bottom: 10px; }
+
+.nf-cmds { font-size: 19px; line-height: 1.7; overflow-x: auto; }
+
+.nf-cmd {
+  display: block;
+  white-space: pre;
+  text-decoration: none;
+  color: var(--green-bright);
+}
+
+.nf-cmd:hover,
+.nf-cmd:focus-visible { color: var(--green-light); outline: none; }
+.nf-cmd:visited { color: var(--green-bright); }
+.nf-cmt { color: var(--green-dim); }
+
+.nf-facts { cursor: pointer; }
+.nf-facts .nf-label { margin-bottom: 8px; }
+.nf-facts:focus-visible { outline: 1px solid var(--green-bright); outline-offset: 2px; }
+.nf-fact-wrap { font-size: 18px; opacity: .9; min-height: 27px; }
+
+.nf-foot { text-align: center; margin-top: 22px; font-size: 15px; opacity: .55; }
+
+/* ===================================================================
    Blog (placeholder)
    =================================================================== */
 
