@@ -669,6 +669,35 @@ body {
 .ft-backtop:focus-visible { color: var(--green-bright); text-decoration: underline; outline: none; }
 .ft-backtop:visited { color: var(--green-dim); }
 
+/* Table search box */
+.tsearch {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 10px 0;
+  font-size: 19px;
+  color: var(--green-dim);
+}
+
+.tsearch-prompt { color: var(--green-bright); white-space: nowrap; }
+
+.tsearch-input {
+  flex: 1;
+  min-width: 180px;
+  font-family: 'VT323', monospace;
+  font-size: 19px;
+  background: #000;
+  color: var(--green-bright);
+  border: 1px solid var(--green-dim);
+  padding: 5px 9px;
+}
+
+.tsearch-input:focus { border-color: var(--green-bright); outline: none; }
+.tsearch-input::placeholder { color: var(--green-dim); opacity: .7; }
+
+.tsearch-count { color: var(--green-dim); white-space: nowrap; }
+
 /* Table pagination controls */
 .pager {
   display: flex;

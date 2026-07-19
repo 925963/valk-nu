@@ -145,7 +145,7 @@ function renderTable(name, file) {
 
   const unit = data.count_label || 'entries';
   return (
-    '<div class="doc-table-wrap">\n' +
+    '<div class="doc-table-wrap" data-search>\n' +
     '      <table class="doc-table">\n' +
     `        <thead><tr>${thead}</tr></thead>\n` +
     '        <tbody>\n' +
@@ -227,7 +227,7 @@ function featuresTable(list, withStatus) {
     return `        <tr>${link}${prod}${status}${ann}</tr>`;
   }).join('\n');
   return (
-    '<div class="doc-table-wrap" data-paginate="50">\n' +
+    '<div class="doc-table-wrap" data-paginate="50" data-search>\n' +
     '      <table class="doc-table">\n' +
     `        <thead>${head}</thead>\n` +
     '        <tbody>\n' + rows + '\n        </tbody>\n' +
