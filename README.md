@@ -13,6 +13,8 @@ page; its output is plain static HTML deployable as-is to GitHub Pages.
 ```
 pages/            # SOURCE templates (edit these); subfolders map to URLs
   index.html      #   home id="home"
+  blog.html       #   blog id="blog" (placeholder)
+  contact.html    #   contact id="contact" (animated boot sequence)
   projects.html   #   projects id="projects"
   projects/
     atlassian-documentation.html   # -> /projects/atlassian-documentation.html
@@ -43,6 +45,7 @@ css/styles.css    # green-phosphor terminal styling (design option 1c)
 js/game.js        # platformer engine (window.createGame)
 js/main.js        # wires the engine to canvas + keyboard/touch controls
 js/nav.js         # header menu-dropdown toggle
+js/contact.js     # contact page boot-sequence animation (contact.html only)
 js/pagination.js  # client-side search ([data-search]) + pagination
                   #   ([data-paginate]); search filters across all pages
 avatar-rik.png    # portrait asset (tinted green via CSS)

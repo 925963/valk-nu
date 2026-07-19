@@ -745,6 +745,87 @@ body {
 .ft-doc a { color: var(--green-bright); }
 
 /* ===================================================================
+   Blog (placeholder)
+   =================================================================== */
+
+.blog-total { margin: 0 0 6px; font-size: 20px; color: var(--green-dim); }
+.blog-empty { margin: 6px 0 0; font-size: 24px; color: var(--green-bright); }
+
+/* ===================================================================
+   Contact page (CONTACT.EXE)
+   =================================================================== */
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: .82; }
+  94% { opacity: 1; }
+}
+
+.crt-flicker { animation: flicker 6s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .crt-flicker { animation: none; }
+}
+
+.contact-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px dashed var(--green-dim);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.contact-title { font-size: 26px; }
+.contact-ver { font-size: 16px; opacity: .7; }
+
+.contact-term {
+  border: 1px solid var(--green-dim);
+  padding: 22px 24px;
+  cursor: pointer;
+}
+
+.contact-term:focus-visible { outline: 1px solid var(--green-bright); outline-offset: 2px; }
+
+.contact-line { font-size: 19px; line-height: 1.5; white-space: pre-wrap; }
+.contact-prompt { font-size: 19px; }
+
+/* Terminal line colours (boot sequence) */
+.ct-bright { color: var(--green-bright); }
+.ct-dim { color: var(--green-dim); }
+.ct-light { color: var(--green-light); }
+.ct-red { color: #e6483c; }
+
+.contact-reveal {
+  margin-top: 20px;
+  border: 1px solid var(--green-bright);
+  padding: 20px 24px;
+  box-shadow: 0 0 18px rgba(51, 255, 102, .15);
+}
+
+.contact-decrypt { margin: 0 0 6px; font-size: 16px; opacity: .75; }
+.contact-email { margin: 0 0 10px; font-size: 24px; }
+
+.contact-send {
+  display: inline-block;
+  border: 1px solid var(--green-bright);
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: var(--green-bright);
+}
+
+.contact-send:hover,
+.contact-send:focus-visible { color: var(--green-light); border-color: var(--green-light); outline: none; }
+.contact-send:visited { color: var(--green-bright); }
+
+.contact-note { margin: 14px 0 0; font-size: 15px; opacity: .6; line-height: 1.6; }
+.contact-foot { margin: 26px 0 0; text-align: center; font-size: 15px; opacity: .55; }
+
+/* ===================================================================
    Responsive
    =================================================================== */
 

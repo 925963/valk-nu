@@ -1,0 +1,57 @@
+<!--@page id="contact" title="contact"-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU // CONTACT.EXE</title>
+  <meta name="description" content="Get in touch with Rik — no forms, no chatbots, just email.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ROOT}}css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <!--@header-->
+
+    <main class="terminal panel crt-flicker" aria-label="Contact">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="terminal-inner">
+
+        <div class="contact-head">
+          <span class="contact-title">&gt;_ VALK.NU // CONTACT.EXE</span>
+          <span class="contact-ver">v1.0 — carrier pigeon module deprecated</span>
+        </div>
+
+        <div class="contact-term" id="contact-term" role="button" tabindex="0" aria-label="Boot sequence — click or press Enter to skip">
+          <div id="contact-lines"></div>
+          <div class="contact-prompt" id="contact-prompt" hidden>&gt; <span class="cursor">_</span></div>
+        </div>
+
+        <div class="contact-reveal" id="contact-reveal" hidden>
+          <p class="contact-decrypt">$ decrypt --output=human_readable contact.gpg</p>
+          <p class="contact-email">rik [at] valk [dot] nu</p>
+          <a class="contact-send" href="mailto:rik@valk.nu">[ SEND TRANSMISSION ]</a>
+          <p class="contact-note">NOTE: response time varies by sunspot activity, caffeine reserves, and whether the message subject line contains the word "synergy" (auto-deprioritized, −3 days).</p>
+        </div>
+
+        <noscript>
+          <div class="contact-reveal">
+            <p class="contact-decrypt">$ decrypt --output=human_readable contact.gpg</p>
+            <p class="contact-email">rik [at] valk [dot] nu</p>
+            <a class="contact-send" href="mailto:rik@valk.nu">[ SEND TRANSMISSION ]</a>
+          </div>
+        </noscript>
+
+        <p class="contact-foot" id="contact-foot">click the terminal to skip ahead</p>
+
+      </div>
+    </main>
+
+    <!--@footer-->
+  </div>
+
+  <script src="{{ROOT}}js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VALK.NU // CONTACT.EXE</title>
+  <meta name="description" content="Get in touch with Rik — no forms, no chatbots, just email.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+  <div class="site-header-bar">
+    <p class="breadcrumb"><a href="index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">contact</span></p>
+    <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-dropdown">[MENU]</button>
+  </div>
+  <nav class="menu-dropdown" id="menu-dropdown" aria-label="Main menu" hidden>
+    <p class="menu-label">$ ls /menu</p>
+    <ul class="menu-list">
+      <li><a class="nav-item" data-nav="home" href="index.html">HOME</a></li>
+      <li><a class="nav-item" data-nav="about" href="#">ABOUT</a></li>
+      <li><a class="nav-item" data-nav="projects" href="projects.html">PROJECTS</a></li>
+      <li><a class="nav-item" data-nav="blog" href="blog.html">BLOG</a></li>
+      <li><a class="nav-item" data-nav="contact" data-current href="contact.html">CONTACT</a></li>
+    </ul>
+  </nav>
+</header>
+
+
+    <main class="terminal panel crt-flicker" aria-label="Contact">
+      <div class="crt-overlay" aria-hidden="true"></div>
+      <div class="terminal-inner">
+
+        <div class="contact-head">
+          <span class="contact-title">&gt;_ VALK.NU // CONTACT.EXE</span>
+          <span class="contact-ver">v1.0 — carrier pigeon module deprecated</span>
+        </div>
+
+        <div class="contact-term" id="contact-term" role="button" tabindex="0" aria-label="Boot sequence — click or press Enter to skip">
+          <div id="contact-lines"></div>
+          <div class="contact-prompt" id="contact-prompt" hidden>&gt; <span class="cursor">_</span></div>
+        </div>
+
+        <div class="contact-reveal" id="contact-reveal" hidden>
+          <p class="contact-decrypt">$ decrypt --output=human_readable contact.gpg</p>
+          <p class="contact-email">rik [at] valk [dot] nu</p>
+          <a class="contact-send" href="mailto:rik@valk.nu">[ SEND TRANSMISSION ]</a>
+          <p class="contact-note">NOTE: response time varies by sunspot activity, caffeine reserves, and whether the message subject line contains the word "synergy" (auto-deprioritized, −3 days).</p>
+        </div>
+
+        <noscript>
+          <div class="contact-reveal">
+            <p class="contact-decrypt">$ decrypt --output=human_readable contact.gpg</p>
+            <p class="contact-email">rik [at] valk [dot] nu</p>
+            <a class="contact-send" href="mailto:rik@valk.nu">[ SEND TRANSMISSION ]</a>
+          </div>
+        </noscript>
+
+        <p class="contact-foot" id="contact-foot">click the terminal to skip ahead</p>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+  <nav class="socials" aria-label="Social links">
+    <a href="https://www.linkedin.com/in/rikdevalk/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener">[LI]</a>
+    <a href="https://www.instagram.com/rik.de.valk/" title="Instagram" aria-label="Instagram" target="_blank" rel="noopener">[IG]</a>
+    <a href="https://wa.me/31655372988" title="WhatsApp" aria-label="WhatsApp" target="_blank" rel="noopener">[WA]</a>
+    <a href="https://signal.me/#p/+31655372988" title="Signal" aria-label="Signal" target="_blank" rel="noopener">[SG]</a>
+  </nav>
+  <p class="footer-status">READY&gt;<span class="cursor">_</span></p>
+</footer>
+<script src="js/nav.js"></script>
+<script src="js/pagination.js"></script>
+
+  </div>
+
+  <script src="js/contact.js"></script>
+</body>
+</html>

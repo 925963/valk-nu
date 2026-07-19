@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VALK.NU // PROJECTS</title>
-  <meta name="description" content="valk.nu — current projects, terminal-log style.">
+  <title>VALK.NU // BLOG</title>
+  <meta name="description" content="valk.nu — blog.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
   <div class="page">
     <header class="site-header">
   <div class="site-header-bar">
-    <p class="breadcrumb"><a href="index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">projects</span></p>
+    <p class="breadcrumb"><a href="index.html">valk.nu</a> <span class="breadcrumb-sep">&gt;</span> <span class="breadcrumb-current">blog</span></p>
     <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="menu-dropdown">[MENU]</button>
   </div>
   <nav class="menu-dropdown" id="menu-dropdown" aria-label="Main menu" hidden>
@@ -22,42 +22,26 @@
     <ul class="menu-list">
       <li><a class="nav-item" data-nav="home" href="index.html">HOME</a></li>
       <li><a class="nav-item" data-nav="about" href="#">ABOUT</a></li>
-      <li><a class="nav-item" data-nav="projects" data-current href="projects.html">PROJECTS</a></li>
-      <li><a class="nav-item" data-nav="blog" href="blog.html">BLOG</a></li>
+      <li><a class="nav-item" data-nav="projects" href="projects.html">PROJECTS</a></li>
+      <li><a class="nav-item" data-nav="blog" data-current href="blog.html">BLOG</a></li>
       <li><a class="nav-item" data-nav="contact" href="contact.html">CONTACT</a></li>
     </ul>
   </nav>
 </header>
 
 
-    <main class="terminal panel" aria-label="Projects">
+    <main class="terminal panel" aria-label="Blog">
       <div class="crt-overlay" aria-hidden="true"></div>
       <div class="terminal-inner">
 
         <header class="header">
-          <h1 class="title">PROJECTS</h1>
+          <h1 class="title">BLOG</h1>
         </header>
         <hr class="divider">
 
-        <p class="menu-label">$ ls ~/projects</p>
-
-        <ul class="projects">
-          <li class="project">
-            <p class="project-cmd">$ cat atlassian-documentation.md</p>
-            <a class="project-name" href="projects/atlassian-documentation.html">atlassian-documentation</a>
-            <p class="project-desc">// curated index of Atlassian product & API documentation links.</p>
-          </li>
-          <li class="project">
-            <p class="project-cmd">$ cat toolbox.md</p>
-            <a class="project-name" href="projects/toolbox.html">toolbox</a>
-            <p class="project-desc">// a curated box of tools, links and utilities.</p>
-          </li>
-          <li class="project">
-            <p class="project-cmd">$ cat atlassian-features-tracker.md</p>
-            <a class="project-name" href="projects/atlassian-features-tracker/">atlassian-features-tracker</a>
-            <p class="project-desc">// tracks Atlassian Cloud features from the weekly release notes.</p>
-          </li>
-        </ul>
+        <p class="menu-label">$ ls -l ~/blog</p>
+        <p class="blog-total">total 0</p>
+        <p class="blog-empty">// If I ever have time…<span class="cursor">_</span></p>
 
       </div>
     </main>
