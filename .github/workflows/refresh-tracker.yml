@@ -1,0 +1,47 @@
+name: Refresh Atlassian features tracker
+
+# Re-imports the latest feature data from the atlassian-features repo and
+# rebuilds the site, then commits the result. Runs weekly (after that repo's
+# scraper) and can be triggered manually.
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Mondays 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-tracker
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout valk-nu
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Import latest feature data (shallow clone of atlassian-features)
+        run: node scripts/import-atlassian-features.js --remote
+
+      - name: Rebuild the static site
+        run: node build.js
+
+      - name: Commit & push if anything changed
+        run: |
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes — tracker already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: weekly refresh of Atlassian features tracker"
+          git push

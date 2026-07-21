@@ -107,15 +107,25 @@ Each template starts with a directive that drives the shared header:
 
 The tracker pages are generated from a snapshot of the separate
 [atlassian-features](https://github.com/925963/atlassian-features) repo (which
-scrapes the Atlassian Cloud weekly release notes). To refresh:
+re-scrapes the Atlassian Cloud weekly release notes). That repo stores one JSON
+per feature — there is no single consolidated file to fetch — so the import
+pulls the data itself and writes the trimmed `data/atlassian-features.json` (no
+per-feature history, capped descriptions).
+
+**Automatic (weekly):** `.github/workflows/refresh-tracker.yml` runs every
+Monday (and on manual dispatch): it re-imports the latest data and rebuilds,
+committing the result. So the tracker stays current with no local steps.
+
+**Manual refresh:**
 
 ```bash
-node scripts/import-atlassian-features.js   # reads ../atlassian-features/data/features
+node scripts/import-atlassian-features.js --remote   # shallow-clones the latest data
 node build.js
 ```
 
-`import-atlassian-features.js` writes a trimmed `data/atlassian-features.json`
-(no per-feature history, capped descriptions). Feature titles link out to their
+`--remote` needs no local checkout and is always current. Omit it (or pass a
+path) to import from a local `../atlassian-features` clone instead — but note a
+local clone can be stale/behind the remote. Feature titles link out to their
 Atlassian source page — the tracker doesn't generate per-feature detail pages.
 
 The generated `*.html` files are committed so GitHub Pages can serve them
