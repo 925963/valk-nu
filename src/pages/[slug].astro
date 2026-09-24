@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ArticleHeader from '../components/ArticleHeader.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import ReviewSummary from '../components/ReviewSummary.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import PostNav from '../components/PostNav.astro';
+import { getTopic } from '../config/topics';
+import { getReadingMinutes, formatDateISO } from '../lib/content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const topic = getTopic(post.data.topic)!;
+const minutes = getReadingMinutes(post.body ?? '');
+const dateStr = formatDateISO(post.data.date);
+const tocItems = headings
+  .filter((h) => h.depth === 2)
+  .map((h, i) => ({ num: String(i + 1).padStart(2, '0'), label: h.text, href: `#${h.slug}` }));
+
+const allPosts = await getCollection('posts');
+const sorted = [...allPosts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const idx = sorted.findIndex((p) => p.id === post.id);
+const prevPost = idx < sorted.length - 1 ? sorted[idx + 1] : undefined;
+
+const sameTopic = sorted.filter((p) => p.data.topic === post.data.topic);
+const topicIdx = sameTopic.findIndex((p) => p.id === post.id);
+const nextInTopic = topicIdx > 0 ? sameTopic[topicIdx - 1] : undefined;
+
+function navRef(p: (typeof sorted)[number]) {
+  return { href: `/${p.id}/`, title: p.data.title, meta: `${formatDateISO(p.data.date)} · ${getTopic(p.data.topic)!.label}` };
+}
+
+const otherVondsten = post.data.type === 'vondst' ? allPosts.filter((p) => p.data.type === 'vondst' && p.id !== post.id) : [];
+---
+<Layout title={`${post.data.title} — Rik de Valk`} description={post.data.description} lang={post.data.lang} headerProgress="live">
+  <div class="rv-frame rv-layout">
+    <article style="display: flex; flex-direction: column; gap: var(--space-12);">
+      <ArticleHeader
+        topic={topic.label}
+        topicHref={`/onderwerpen/${topic.slug}/`}
+        title={post.data.title}
+        lead={post.data.description}
+        date={dateStr}
+        minutes={minutes}
+        en={post.data.lang === 'en'}
+      />
+      {post.data.type === 'review' && post.data.review && <ReviewSummary {...post.data.review} />}
+      {post.data.type === 'vondst' && post.data.service && (
+        <ServiceCard domain={post.data.service.domain} href={post.data.service.url} facts={post.data.service.facts} disclosure={post.data.service.disclosure} />
+      )}
+      <div class="rv-prose">
+        <Content />
+      </div>
+      {post.data.type !== 'vondst' && (
+        <PostNav
+          prev={prevPost && navRef(prevPost)}
+          next={nextInTopic && navRef(nextInTopic)}
+          topic={{ href: `/onderwerpen/${topic.slug}/`, label: topic.label }}
+        />
+      )}
+    </article>
+    <aside>
+      {post.data.type === 'vondst' ? (
+        <div class="rv-sticky" style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div class="rv-label" style="padding: 12px 0; border-bottom: 1px solid var(--line);">Meer vondsten</div>
+          <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+            {otherVondsten.map((v) => (
+              <a class="rv-plain" href={`/${v.id}/`} style="display: flex; flex-direction: column; gap: 4px;">
+                <span class="rv-ttl" style="font-size: 15px; line-height: 24px; font-weight: 500;">{v.data.title}</span>
+                <span class="rv-mono" style="font-size: 12px; line-height: 16px; color: var(--accent);">→ {v.data.service?.domain}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
+        tocItems.length > 0 && (
+          <div class="rv-sticky">
+            <TableOfContents items={tocItems} collapsible={false} />
+          </div>
+        )
+      )}
+    </aside>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('click', (e) => {
+    const button = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-copy-code]');
+    if (!button) return;
+    const code = button.closest('figure.rv-code')?.querySelector('code');
+    if (!code) return;
+    navigator.clipboard?.writeText(code.textContent ?? '').then(() => {
+      const original = button.textContent;
+      button.textContent = 'Gekopieerd';
+      setTimeout(() => {
+        button.textContent = original;
+      }, 1600);
+    });
+  });
+</script>

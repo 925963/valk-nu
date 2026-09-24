@@ -1,0 +1,32 @@
+---
+interface PostRef {
+  href: string;
+  title: string;
+  meta?: string;
+}
+
+interface Props {
+  prev?: PostRef;
+  next?: PostRef;
+  topic?: { href: string; label: string };
+}
+
+const { prev, next, topic } = Astro.props;
+const secondary = next ? { href: next.href, title: next.title, meta: next.meta, eyebrow: 'Volgend stuk →' } : topic ? { href: topic.href, title: `Alles over ${topic.label}`, meta: '→ Naar het overzicht', eyebrow: 'Onderwerp' } : null;
+---
+<nav class="rv-postnav" aria-label="Meer lezen">
+  {prev && (
+    <a class="rv-plain rv-card" href={prev.href}>
+      <span class="rv-label">← Vorig stuk</span>
+      <span class="rv-ttl">{prev.title}</span>
+      {prev.meta && <span class="rv-label">{prev.meta}</span>}
+    </a>
+  )}
+  {secondary && (
+    <a class="rv-plain rv-card" href={secondary.href}>
+      <span class="rv-label">{secondary.eyebrow}</span>
+      <span class="rv-ttl">{secondary.title}</span>
+      {secondary.meta && <span class="rv-label">{secondary.meta}</span>}
+    </a>
+  )}
+</nav>

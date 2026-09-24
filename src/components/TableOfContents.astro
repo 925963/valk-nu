@@ -1,0 +1,46 @@
+---
+interface TocItem {
+  num: string;
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  items: TocItem[];
+  collapsible?: boolean;
+  title?: string;
+}
+
+const { items, collapsible = false, title = 'Op deze pagina' } = Astro.props;
+---
+{collapsible ? (
+  <details class="rv-toc-collapsible">
+    <summary class="rv-label">{title} · {items.length} secties</summary>
+    <ol class="rv-toc-list" data-toc>
+      {items.map((it) => (
+        <li>
+          <a href={it.href || `#s${it.num}`}>
+            <span class="rv-toc-dot" aria-hidden="true"></span>
+            <span class="rv-toc-num">{it.num}</span>
+            <span>{it.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </details>
+) : (
+  <nav class="rv-toc" aria-label={title} data-toc-nav>
+    <div class="rv-label rv-toc-head">{title}</div>
+    <ol class="rv-toc-list" data-toc>
+      {items.map((it) => (
+        <li>
+          <a href={it.href || `#s${it.num}`}>
+            <span class="rv-toc-dot" aria-hidden="true"></span>
+            <span class="rv-toc-num">{it.num}</span>
+            <span>{it.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}

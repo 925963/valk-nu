@@ -1,0 +1,43 @@
+---
+import FactList from './FactList.astro';
+
+interface Fact {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  verdict: string;
+  facts: Fact[];
+  pros?: string[];
+  cons?: string[];
+  disclosure?: string;
+  title?: string;
+}
+
+const { verdict, facts, pros = [], cons = [], disclosure = 'Zelf gekocht · geen sponsor', title = 'In het kort' } = Astro.props;
+---
+<section class="rv-box" aria-label="Samenvatting">
+  <div class="rv-box-top">
+    <span class="rv-label">{title}</span>
+    <span class="rv-label">{disclosure}</span>
+  </div>
+  <p class="rv-verdict">{verdict}</p>
+  <FactList facts={facts} />
+  {(pros.length > 0 || cons.length > 0) && (
+    <div class="rv-procon">
+      <div>
+        <span class="rv-label">Goed</span>
+        <ul class="rv-pros">
+          {pros.map((p) => <li>{p}</li>)}
+        </ul>
+      </div>
+      <div>
+        <span class="rv-label">Minder</span>
+        <ul class="rv-cons">
+          {cons.map((c) => <li>{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  )}
+</section>
