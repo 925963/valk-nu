@@ -1,0 +1,59 @@
+---
+import SearchButton from './SearchButton.astro';
+
+interface NavItem {
+  label: string;
+  href: string;
+  hideSmall?: boolean;
+}
+
+interface Props {
+  name?: string;
+  homeHref?: string;
+  nav?: NavItem[];
+  search?: boolean;
+  compact?: boolean;
+  progress?: 'live' | number;
+}
+
+const DEFAULT_NAV: NavItem[] = [
+  { label: 'Onderwerpen', href: '/onderwerpen/' },
+  { label: 'Projecten', href: '/projecten/' },
+  { label: 'Archief', href: '/archief/' },
+  { label: 'RSS', href: '/feed.xml', hideSmall: true },
+];
+
+const {
+  name = 'Rik de Valk',
+  homeHref = '/',
+  nav = DEFAULT_NAV,
+  search = true,
+  compact = false,
+  progress,
+} = Astro.props;
+
+const path = Astro.url.pathname;
+---
+<header class:list={['rv-header', compact && 'rv-header-compact']}>
+  <div class="rv-frame rv-header-in">
+    <a class="rv-wordmark" href={homeHref}>{name}</a>
+    <div class="rv-header-right">
+      <nav class="rv-nav" aria-label="Hoofdmenu">
+        {nav.map((n) => (
+          <a
+            href={n.href}
+            class={n.hideSmall ? 'rv-hide-sm' : undefined}
+            aria-current={path === n.href ? 'page' : undefined}
+          >
+            {n.label}
+          </a>
+        ))}
+      </nav>
+      {search && <SearchButton compact={compact} />}
+    </div>
+  </div>
+  {progress === 'live' && <div class="rv-progress" data-live aria-hidden="true"></div>}
+  {typeof progress === 'number' && (
+    <div class="rv-progress" aria-hidden="true" style={`--rv-progress: ${progress}`}></div>
+  )}
+</header>

@@ -1,0 +1,42 @@
+---
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/components.css';
+import '../styles/site.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'nl' | 'en';
+  headerProgress?: 'live' | number;
+}
+
+const { title, description, lang = 'nl', headerProgress } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" type="application/rss+xml" title="Rik de Valk — RSS" href="/feed.xml" />
+  </head>
+  <body class="rv-root">
+    <a class="rv-skip-link" href="#main">Naar de inhoud</a>
+    <SiteHeader progress={headerProgress} />
+    <main id="main" class="rv-main">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

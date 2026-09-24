@@ -1,0 +1,26 @@
+---
+interface MetaItem {
+  text: string;
+  accent?: boolean;
+}
+
+interface Props {
+  items: (string | MetaItem)[];
+  en?: boolean;
+  class?: string;
+}
+
+const { items, en = false, class: className } = Astro.props;
+
+function normalize(item: string | MetaItem): MetaItem {
+  return typeof item === 'string' ? { text: item } : item;
+}
+---
+<div class:list={['rv-meta rv-label', className]}>
+  {items.map((item) => {
+    const it = normalize(item);
+    return it.accent ? <span class="rv-meta-accent">{it.text}</span> : <span>{it.text}</span>;
+  })}
+  {en && <span class="rv-tag-en" title="Engelstalig stuk">EN</span>}
+  <slot />
+</div>

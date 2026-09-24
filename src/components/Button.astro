@@ -1,0 +1,23 @@
+---
+interface Props {
+  variant?: 'primary' | 'quiet';
+  href?: string;
+  arrow?: boolean;
+  class?: string;
+  rel?: string;
+}
+
+const { variant = 'primary', href, arrow = false, class: className, rel } = Astro.props;
+const cls = ['rv-btn', `rv-btn-${variant}`, className].filter(Boolean).join(' ');
+---
+{href ? (
+  <a class={cls} href={href} rel={rel}>
+    <slot />
+    {arrow && <span aria-hidden="true">→</span>}
+  </a>
+) : (
+  <button class={cls} type="button">
+    <slot />
+    {arrow && <span aria-hidden="true">→</span>}
+  </button>
+)}

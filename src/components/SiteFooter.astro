@@ -1,0 +1,37 @@
+---
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  name?: string;
+  year?: number;
+  links?: FooterLink[];
+  colophon?: string | false;
+}
+
+const DEFAULT_LINKS: FooterLink[] = [
+  { label: 'E-mail', href: 'mailto:rik@valk.nu' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/rikdevalk/' },
+  { label: 'RSS', href: '/feed.xml' },
+];
+
+const {
+  name = 'Rik de Valk',
+  year = new Date().getFullYear(),
+  links = DEFAULT_LINKS,
+  colophon = 'Statische HTML · geen cookies · geen trackers',
+} = Astro.props;
+---
+<footer class="rv-footer">
+  <div class="rv-frame rv-footer-in">
+    <div class="rv-footer-row">
+      <span>© {year} {name}</span>
+      <nav class="rv-nav" aria-label="Footer">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </div>
+    {colophon !== false && <div class="rv-colophon">{colophon}</div>}
+  </div>
+</footer>
