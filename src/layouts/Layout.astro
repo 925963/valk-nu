@@ -5,6 +5,7 @@ import '../styles/components.css';
 import '../styles/site.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SearchDialog from '../components/SearchDialog.astro';
 
 interface Props {
   title: string;
@@ -34,9 +35,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body class="rv-root">
     <a class="rv-skip-link" href="#main">Naar de inhoud</a>
     <SiteHeader progress={headerProgress} />
-    <main id="main" class="rv-main">
+    <main id="main" class="rv-main" data-pagefind-body>
       <slot />
     </main>
     <SiteFooter />
+    <SearchDialog />
   </body>
 </html>

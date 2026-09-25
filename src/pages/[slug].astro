@@ -39,7 +39,7 @@ function navRef(p: (typeof publishedSorted)[number]) {
 const otherVondsten = post.data.type === 'vondst' ? published.filter((p) => p.data.type === 'vondst') : [];
 ---
 <Layout title={`${post.data.title} — Rik de Valk`} description={post.data.description} lang={post.data.lang} headerProgress="live">
-  <div class="rv-frame rv-layout">
+  <div class="rv-frame rv-layout" data-pagefind-ignore={isPublished(post) ? undefined : true}>
     <article style="display: flex; flex-direction: column; gap: var(--space-12);">
       <ArticleHeader
         topic={topic.label}

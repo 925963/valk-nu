@@ -1,0 +1,161 @@
+---
+---
+<dialog id="rv-search-dialog" aria-label="Zoeken" data-pagefind-path="/pagefind/pagefind.js">
+  <div class="rv-search-head">
+    <input type="search" id="rv-search-input" placeholder="Zoeken…" aria-label="Zoekterm" autocomplete="off" />
+    <button type="button" data-search-close class="rv-icon-btn" aria-label="Sluiten (Esc)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+  </div>
+  <ul id="rv-search-results" class="rv-search-results" role="listbox"></ul>
+  <p id="rv-search-empty" class="rv-label rv-search-empty" hidden>Geen resultaten</p>
+</dialog>
+
+<style>
+  #rv-search-dialog {
+    padding: 0;
+    border: none;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-float);
+    width: min(560px, calc(100vw - var(--space-8)));
+    max-height: min(480px, 80vh);
+    background: var(--paper);
+    color: var(--ink);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  #rv-search-dialog::backdrop {
+    background: rgba(28, 32, 36, 0.35);
+  }
+  #rv-search-dialog[open] {
+    display: flex;
+  }
+  .rv-search-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    border-bottom: 1px solid var(--line);
+    padding: 0 var(--space-2) 0 var(--space-4);
+  }
+  #rv-search-input {
+    flex: 1;
+    min-height: 56px;
+    border: 0;
+    background: none;
+    font: 400 17px/24px var(--font-sans);
+    color: var(--ink);
+    outline: none;
+  }
+  #rv-search-input::placeholder {
+    color: var(--ink-subtle);
+  }
+  #rv-search-input::-webkit-search-cancel-button {
+    display: none;
+  }
+  .rv-search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-4);
+    overflow-y: auto;
+  }
+  .rv-search-results .rv-post {
+    border-bottom: 1px solid var(--line);
+  }
+  .rv-search-results .rv-post:last-child {
+    border-bottom: none;
+  }
+  .rv-search-results mark {
+    background: var(--accent-soft);
+    color: inherit;
+  }
+  .rv-search-empty {
+    padding: var(--space-6) var(--space-4);
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('rv-search-dialog') as HTMLDialogElement | null;
+  const input = document.getElementById('rv-search-input') as HTMLInputElement | null;
+  const results = document.getElementById('rv-search-results');
+  const empty = document.getElementById('rv-search-empty');
+  if (!dialog || !input || !results || !empty) throw new Error('SearchDialog: expected elements missing');
+
+  // A plain `import()` here — literal, computed, @vite-ignore'd, all tried — still gets
+  // wrapped in Astro/Vite's modulepreload helper at build time, which then crashes at
+  // runtime (`__VITE_PRELOAD__` is left unresolved: the helper's manifest lookup only
+  // makes sense for the site's own bundled chunks, not a file pagefind.js writes after
+  // the build finishes). Routing the import through `new Function` hides it from that
+  // static rewrite entirely — it's just a runtime string to the bundler.
+  const dynamicImport = new Function('specifier', 'return import(specifier)') as (specifier: string) => Promise<any>;
+
+  let pagefindLoaded: Promise<any> | null = null;
+  function loadPagefind() {
+    if (!pagefindLoaded) {
+      pagefindLoaded = dynamicImport(dialog!.dataset.pagefindPath!).catch(() => null);
+    }
+    return pagefindLoaded;
+  }
+
+  function open() {
+    dialog!.showModal();
+    loadPagefind();
+    input!.value = '';
+    results!.innerHTML = '';
+    empty!.hidden = true;
+    input!.focus();
+  }
+
+  document.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('[data-search-trigger]')) open();
+  });
+  document.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement;
+    const typing = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable;
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      open();
+    } else if (e.key === '/' && !typing) {
+      e.preventDefault();
+      open();
+    }
+  });
+  document.querySelector('[data-search-close]')?.addEventListener('click', () => dialog!.close());
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog!.close();
+  });
+
+  let debounceId = 0;
+  input.addEventListener('input', () => {
+    window.clearTimeout(debounceId);
+    const query = input!.value.trim();
+    if (!query) {
+      results!.innerHTML = '';
+      empty!.hidden = true;
+      return;
+    }
+    debounceId = window.setTimeout(async () => {
+      const pf = await loadPagefind();
+      if (!pf) return;
+      await pf.init?.();
+      const search = await pf.search(query);
+      const items = await Promise.all(search.results.slice(0, 8).map((r: any) => r.data()));
+      results!.innerHTML = items
+        .map(
+          (item: any) => `
+        <li class="rv-post rv-post-compact">
+          <a class="rv-plain" href="${item.url}">
+            <span class="rv-post-body">
+              <span class="rv-ttl rv-post-title">${item.meta?.title ?? item.url}</span>
+              <span class="rv-post-excerpt">${item.excerpt}</span>
+            </span>
+          </a>
+        </li>`
+        )
+        .join('');
+      empty!.hidden = items.length > 0;
+    }, 150);
+  });
+</script>
