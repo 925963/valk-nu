@@ -63,6 +63,23 @@ main { display: block; }
   min-height: 60vh;
 }
 
+/* Cross-document title morph (post list/featured title → article h1): per-post
+   view-transition-name is set inline (ArticleHeader/FeaturedPost/PostListItem)
+   overriding components.css's static `post-title` placeholder. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*) {
+  animation-duration: 200ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Section numbers (01, 02…) before every h2 in prose — a CSS counter so it never touches
    heading text, which Astro uses to compute slugs and table-of-contents labels. */
 .rv-prose {

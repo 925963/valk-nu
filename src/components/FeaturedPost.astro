@@ -11,16 +11,17 @@ interface Props {
   en?: boolean;
   label?: string;
   readMore?: string;
+  slug: string;
 }
 
-const { href, title, lead, date, topic, minutes, en = false, label = 'Nieuwste', readMore = 'Lees verder' } = Astro.props;
+const { href, title, lead, date, topic, minutes, en = false, label = 'Nieuwste', readMore = 'Lees verder', slug } = Astro.props;
 const items = [{ text: label, accent: true }, date, topic, minutes ? `${minutes} min lezen` : null].filter(
   (x): x is string | { text: string; accent: boolean } => Boolean(x)
 );
 ---
 <article class="rv-featured">
   <MetaLine items={items} en={en} />
-  <a class="rv-plain" href={href}><h1 class="rv-featured-title rv-ttl">{title}</h1></a>
+  <a class="rv-plain" href={href}><h1 class="rv-featured-title rv-ttl" style={`view-transition-name: post-${slug}`}>{title}</h1></a>
   {lead && <p class="rv-featured-lead">{lead}</p>}
   <div style="padding-top: 8px; font-size: 15px; line-height: 24px;">
     <a class="rv-link" href={href}>{readMore}</a>

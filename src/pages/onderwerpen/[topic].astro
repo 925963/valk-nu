@@ -36,6 +36,7 @@ const otherTopics = TOPICS.filter((t) => t.id !== topic.id).map((t) => ({
         {posts.map((post) => (
           <PostListItem
             href={`/${post.id}/`}
+            slug={post.id}
             date={formatDateISO(post.data.date)}
             title={post.data.title}
             excerpt={post.data.description}

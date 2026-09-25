@@ -26,6 +26,7 @@ const filterTopics = [{ id: 'all', label: 'Alles' }, ...TOPICS.map((t) => ({ id:
       {featured && (
         <FeaturedPost
           href={`/${featured.id}/`}
+          slug={featured.id}
           title={featured.data.title}
           lead={featured.data.description}
           date={formatDateISO(featured.data.date)}
@@ -44,6 +45,7 @@ const filterTopics = [{ id: 'all', label: 'Alles' }, ...TOPICS.map((t) => ({ id:
         {rest.map((post) => (
           <PostListItem
             href={`/${post.id}/`}
+            slug={post.id}
             date={formatDateISO(post.data.date)}
             title={post.data.title}
             excerpt={post.data.description}

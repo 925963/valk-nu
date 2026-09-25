@@ -10,14 +10,15 @@ interface Props {
   minutes?: number;
   meta?: string[];
   en?: boolean;
+  slug: string;
 }
 
-const { topic, topicHref = '#', title, lead, date, minutes, meta = [], en = false } = Astro.props;
+const { topic, topicHref = '#', title, lead, date, minutes, meta = [], en = false, slug } = Astro.props;
 const items = [date, minutes ? `${minutes} min lezen` : null, ...meta].filter((x): x is string => Boolean(x));
 ---
 <header class="rv-article-head" lang={en ? 'en' : undefined}>
   <a class="rv-label rv-article-topic" href={topicHref}>{topic}</a>
-  <h1 class="rv-article-title">{title}</h1>
+  <h1 class="rv-article-title" style={`view-transition-name: post-${slug}`}>{title}</h1>
   {lead && <p class="rv-article-lead">{lead}</p>}
   <MetaLine items={items} en={en} />
 </header>

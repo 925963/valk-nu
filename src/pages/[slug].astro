@@ -49,6 +49,7 @@ const otherVondsten = post.data.type === 'vondst' ? published.filter((p) => p.da
         date={dateStr}
         minutes={minutes}
         en={post.data.lang === 'en'}
+        slug={post.id}
       />
       {post.data.type === 'review' && post.data.review && <ReviewSummary {...post.data.review} />}
       {post.data.type === 'vondst' && post.data.service && (

@@ -44,3 +44,27 @@ const { items, collapsible = false, title = 'Op deze pagina' } = Astro.props;
     </ol>
   </nav>
 )}
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-toc]').forEach((list) => {
+    const links = Array.from(list.querySelectorAll<HTMLAnchorElement>('a'));
+    const entries = links
+      .map((a) => ({ link: a, target: document.querySelector<HTMLElement>(a.getAttribute('href') || '') }))
+      .filter((e): e is { link: HTMLAnchorElement; target: HTMLElement } => !!e.target);
+    if (!entries.length) return;
+
+    const observer = new IntersectionObserver(
+      (observed) => {
+        for (const entry of observed) {
+          if (!entry.isIntersecting) continue;
+          const active = entries.find((e) => e.target === entry.target);
+          if (!active) continue;
+          entries.forEach((e) => e.link.removeAttribute('aria-current'));
+          active.link.setAttribute('aria-current', 'true');
+        }
+      },
+      { rootMargin: '-96px 0px -60% 0px' }
+    );
+    entries.forEach((e) => observer.observe(e.target));
+  });
+</script>
