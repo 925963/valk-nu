@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { TOPICS } from '../../config/topics';
+import { isPublished } from '../../lib/content';
+
+const allPosts = await getCollection('posts');
+const published = allPosts.filter(isPublished);
+const counts = Object.fromEntries(TOPICS.map((t) => [t.id, published.filter((p) => p.data.topic === t.id).length]));
+---
+<Layout title="Onderwerpen — Rik de Valk" description="De onderwerpen waar ik over schrijf: Agile & Atlassian, Reviews en Vondsten.">
+  <div class="rv-frame rv-layout-single">
+    <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+      <div class="rv-label">Onderwerpen</div>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Onderwerpen</h1>
+    </div>
+    <ul style="list-style: none; margin: var(--space-12) 0 0; padding: 0; display: flex; flex-direction: column;">
+      {TOPICS.map((t) => (
+        <li style="border-bottom: 1px solid var(--line); padding: var(--space-6) 0;">
+          <a class="rv-plain" href={`/onderwerpen/${t.slug}/`} style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <span class="rv-ttl" style="font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">{t.label}</span>
+            <span style="font-size: 15px; line-height: 24px; color: var(--ink-muted);">{t.description}</span>
+            <span class="rv-label">{counts[t.id]} {counts[t.id] === 1 ? 'stuk' : 'stukken'}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

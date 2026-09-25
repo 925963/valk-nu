@@ -7,7 +7,7 @@ import ReviewSummary from '../components/ReviewSummary.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import PostNav from '../components/PostNav.astro';
 import { getTopic } from '../config/topics';
-import { getReadingMinutes, formatDateISO } from '../lib/content';
+import { getReadingMinutes, formatDateISO, isPublished } from '../lib/content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -24,19 +24,19 @@ const tocItems = headings
   .map((h, i) => ({ num: String(i + 1).padStart(2, '0'), label: h.text, href: `#${h.slug}` }));
 
 const allPosts = await getCollection('posts');
-const sorted = [...allPosts].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const idx = sorted.findIndex((p) => p.id === post.id);
-const prevPost = idx < sorted.length - 1 ? sorted[idx + 1] : undefined;
+const published = allPosts.filter((p) => p.id !== post.id && isPublished(p));
+const publishedSorted = [...published].sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const sameTopic = sorted.filter((p) => p.data.topic === post.data.topic);
-const topicIdx = sameTopic.findIndex((p) => p.id === post.id);
-const nextInTopic = topicIdx > 0 ? sameTopic[topicIdx - 1] : undefined;
+const prevPost = publishedSorted.find((p) => p.data.date.getTime() < post.data.date.getTime());
 
-function navRef(p: (typeof sorted)[number]) {
+const newerSameTopic = publishedSorted.filter((p) => p.data.topic === post.data.topic && p.data.date.getTime() > post.data.date.getTime());
+const nextInTopic = newerSameTopic[newerSameTopic.length - 1];
+
+function navRef(p: (typeof publishedSorted)[number]) {
   return { href: `/${p.id}/`, title: p.data.title, meta: `${formatDateISO(p.data.date)} · ${getTopic(p.data.topic)!.label}` };
 }
 
-const otherVondsten = post.data.type === 'vondst' ? allPosts.filter((p) => p.data.type === 'vondst' && p.id !== post.id) : [];
+const otherVondsten = post.data.type === 'vondst' ? published.filter((p) => p.data.type === 'vondst') : [];
 ---
 <Layout title={`${post.data.title} — Rik de Valk`} description={post.data.description} lang={post.data.lang} headerProgress="live">
   <div class="rv-frame rv-layout">

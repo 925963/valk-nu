@@ -1,11 +1,81 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import DotGrid from '../components/DotGrid.astro';
+import FeaturedPost from '../components/FeaturedPost.astro';
+import TopicFilter from '../components/TopicFilter.astro';
+import PostListItem from '../components/PostListItem.astro';
+import { TOPICS, getTopic } from '../config/topics';
+import { getReadingMinutes, formatDateISO, isPublished } from '../lib/content';
+
+const allPosts = await getCollection('posts');
+const published = allPosts.filter(isPublished).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const [featured, ...rest] = published;
+
+const filterTopics = [{ id: 'all', label: 'Alles' }, ...TOPICS.map((t) => ({ id: t.id, label: t.label }))];
 ---
 <Layout
   title="Rik de Valk"
   description="Overdag help ik organisaties met agile werken en Atlassian oplossingen. Hier schrijf ik over alles wat ik onderweg tegenkom: tools, gadgets en slimme diensten."
 >
-  <div class="rv-frame rv-layout-single">
-    <p class="rv-label">Scaffold — wordt in fase 4 vervangen door de echte homepage.</p>
+  <DotGrid aria-label="Introductie">
+    <div class="rv-frame" style="padding: 64px 0 80px; display: flex; flex-direction: column; gap: var(--space-16);">
+      <p style="margin: 0; max-width: 520px; font-size: 17px; line-height: 28px; color: var(--ink-muted);">
+        Overdag help ik organisaties met agile werken en Atlassian oplossingen. Hier schrijf ik over alles wat ik onderweg tegenkom: tools, gadgets en slimme diensten.
+      </p>
+      {featured && (
+        <FeaturedPost
+          href={`/${featured.id}/`}
+          title={featured.data.title}
+          lead={featured.data.description}
+          date={formatDateISO(featured.data.date)}
+          topic={getTopic(featured.data.topic)!.label}
+          minutes={getReadingMinutes(featured.body ?? '')}
+          en={featured.data.lang === 'en'}
+        />
+      )}
+    </div>
+  </DotGrid>
+
+  <div class="rv-frame rv-layout" style="padding-top: var(--space-16);">
+    <div>
+      <TopicFilter topics={filterTopics} />
+      <ol style="list-style: none; margin: 0; padding: 0;" data-post-list>
+        {rest.map((post) => (
+          <PostListItem
+            href={`/${post.id}/`}
+            date={formatDateISO(post.data.date)}
+            title={post.data.title}
+            excerpt={post.data.description}
+            topic={getTopic(post.data.topic)!.label}
+            minutes={getReadingMinutes(post.body ?? '')}
+            en={post.data.lang === 'en'}
+            topicId={post.data.topic}
+          />
+        ))}
+      </ol>
+      <div style="padding-top: var(--space-8); font-size: 15px; line-height: 24px;">
+        <a class="rv-link" href="/archief/">Alle stukken in het archief</a>
+      </div>
+    </div>
+    <aside style="display: flex; flex-direction: column; gap: var(--space-12);">
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="rv-label" style="padding: 12px 0; border-bottom: 1px solid var(--line);">Onderwerpen</div>
+        {TOPICS.map((t) => (
+          <div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: var(--space-2);">
+            <a href={`/onderwerpen/${t.slug}/`} class="rv-plain" style="font-size: 15px; line-height: 24px; font-weight: 500; color: var(--accent);">{t.label}</a>
+            <span style="font-size: 15px; line-height: 24px; color: var(--ink-muted);">{t.description}</span>
+          </div>
+        ))}
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="rv-label" style="padding: 12px 0; border-bottom: 1px solid var(--line);">Volgen</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2); font-size: 15px; line-height: 24px;">
+          <a class="rv-link" href="/feed.xml">RSS-feed</a>
+          <a class="rv-link" href="https://www.linkedin.com/in/rikdevalk/">LinkedIn</a>
+          <a class="rv-link" href="mailto:rik@valk.nu">E-mail</a>
+        </div>
+      </div>
+    </aside>
   </div>
 </Layout>

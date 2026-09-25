@@ -1,4 +1,11 @@
+import type { CollectionEntry } from 'astro:content';
+
 const WORDS_PER_MINUTE_NL = 220;
+
+/** Drafts stay visible in dev for review; production listings/feeds hide them (the page itself still builds). */
+export function isPublished(post: CollectionEntry<'posts'>): boolean {
+  return !post.data.draft || !import.meta.env.PROD;
+}
 
 /** Strips the markdown syntax that would otherwise inflate a naive word count. */
 function stripMarkdown(raw: string): string {
