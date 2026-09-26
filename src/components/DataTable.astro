@@ -1,0 +1,163 @@
+---
+import StatusTag from './StatusTag.astro';
+
+interface Column {
+  header: string;
+  field: string;
+  link?: string;
+  mono?: boolean;
+  lang?: 'en';
+  status?: boolean;
+}
+
+interface Props {
+  columns: Column[];
+  items: Record<string, any>[];
+  searchable?: boolean;
+  pageSize?: number;
+}
+
+const { columns, items, searchable = false, pageSize } = Astro.props;
+---
+<div class="rv-table-wrap" data-paginate={pageSize || undefined} data-search={searchable ? 'true' : undefined}>
+  <table class="rv-table">
+    <thead>
+      <tr>
+        {columns.map((c) => <th>{c.header}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {items.map((item) => (
+        <tr>
+          {columns.map((c, i) => {
+            const value = item[c.field];
+            const content = c.status ? <StatusTag status={value} /> : c.link ? (
+              <a href={item[c.link]} target="_blank" rel="noopener" lang={c.lang}>{value}</a>
+            ) : (
+              <span lang={c.lang}>{value}</span>
+            );
+            return i === 0 ? (
+              <td data-col-first class={c.mono ? 'rv-table-mono' : undefined}>{content}</td>
+            ) : (
+              <td data-label={c.header} class={c.mono ? 'rv-table-mono' : undefined}>{content}</td>
+            );
+          })}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function makePager(): HTMLElement {
+    const bar = document.createElement('div');
+    bar.className = 'rv-pager';
+    bar.innerHTML =
+      '<button type="button" data-act="prev">← Vorige</button>' +
+      '<span class="rv-pager-status"></span>' +
+      '<button type="button" data-act="next">Volgende →</button>';
+    return bar;
+  }
+
+  function makeSearch(): HTMLElement {
+    const box = document.createElement('div');
+    box.className = 'rv-table-search';
+    box.innerHTML =
+      '<input type="search" placeholder="Zoeken…" aria-label="Zoeken in tabel" autocomplete="off">' +
+      '<span class="rv-table-search-count"></span>';
+    return box;
+  }
+
+  function enhance(container: HTMLElement) {
+    const size = parseInt(container.getAttribute('data-paginate') || '0', 10) || 0;
+    const searchable = container.hasAttribute('data-search');
+    const table = container.querySelector('table');
+    const tbody = table?.tBodies[0];
+    if (!tbody || (!size && !searchable)) return;
+
+    const rows = Array.from(tbody.rows);
+    const texts = rows.map((r) => (r.textContent || '').toLowerCase());
+    const total = rows.length;
+    let matched = rows;
+    let current = 1;
+
+    const hasPager = size > 0 && total > size;
+    const bars: HTMLElement[] = [];
+    let searchBox: HTMLElement | null = null;
+    let countEl: HTMLElement | null = null;
+
+    if (searchable) {
+      searchBox = makeSearch();
+      countEl = searchBox.querySelector('.rv-table-search-count');
+      container.parentNode?.insertBefore(searchBox, container);
+    }
+    if (hasPager) {
+      const top = makePager();
+      const bottom = makePager();
+      container.parentNode?.insertBefore(top, container);
+      container.parentNode?.insertBefore(bottom, container.nextSibling);
+      bars.push(top, bottom);
+    }
+
+    function pageCount() {
+      return Math.max(1, Math.ceil(matched.length / (size || matched.length || 1)));
+    }
+
+    function render() {
+      const pages = pageCount();
+      if (current > pages) current = pages;
+      const start = (current - 1) * (size || 0);
+      const end = size ? Math.min(start + size, matched.length) : matched.length;
+
+      rows.forEach((r) => (r.style.display = 'none'));
+      for (let j = start; j < end; j++) matched[j].style.display = '';
+
+      bars.forEach((b) => {
+        const status = b.querySelector('.rv-pager-status')!;
+        status.textContent = matched.length ? `Pagina ${current} van ${pages}` : 'Geen resultaten';
+        (b.querySelector('[data-act=prev]') as HTMLButtonElement).disabled = current === 1;
+        (b.querySelector('[data-act=next]') as HTMLButtonElement).disabled = current === pages;
+      });
+
+      if (countEl) {
+        countEl.textContent = matched.length === total ? `${total} rijen` : `${matched.length} / ${total}`;
+      }
+    }
+
+    function go(p: number) {
+      current = Math.max(1, Math.min(pageCount(), p));
+      render();
+      bars[0]?.scrollIntoView({ block: 'nearest' });
+    }
+
+    function filter(q: string) {
+      const needle = q.trim().toLowerCase();
+      matched = needle ? rows.filter((_, i) => texts[i].includes(needle)) : rows;
+      current = 1;
+      render();
+    }
+
+    bars.forEach((b) => {
+      b.addEventListener('click', (e) => {
+        const act = (e.target as HTMLElement).getAttribute('data-act');
+        if (act === 'prev') go(current - 1);
+        else if (act === 'next') go(current + 1);
+      });
+    });
+
+    if (searchBox) {
+      const input = searchBox.querySelector('input')!;
+      input.addEventListener('input', () => filter(input.value));
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          input.value = '';
+          filter('');
+        }
+      });
+    }
+
+    render();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-paginate], [data-search]').forEach(enhance);
+</script>

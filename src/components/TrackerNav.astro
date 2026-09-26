@@ -1,0 +1,20 @@
+---
+interface Props {
+  current: string;
+}
+
+const { current } = Astro.props;
+const VIEWS = [
+  { key: 'all', label: 'Alle features', href: '/projecten/atlassian-features/' },
+  { key: 'nieuw', label: 'Nieuw', href: '/projecten/atlassian-features/nieuw/' },
+  { key: 'binnenkort', label: 'Binnenkort', href: '/projecten/atlassian-features/binnenkort/' },
+  { key: 'wordt-uitgerold', label: 'Wordt uitgerold', href: '/projecten/atlassian-features/wordt-uitgerold/' },
+  { key: 'afgerond', label: 'Afgerond', href: '/projecten/atlassian-features/afgerond/' },
+  { key: 'hoe-het-werkt', label: 'Hoe het werkt', href: '/projecten/atlassian-features/hoe-het-werkt/' },
+];
+---
+<nav class="rv-filter" aria-label="Tracker-weergaven">
+  {VIEWS.map((v) => (
+    <a href={v.href} aria-selected={v.key === current ? 'true' : 'false'}>{v.label}</a>
+  ))}
+</nav>

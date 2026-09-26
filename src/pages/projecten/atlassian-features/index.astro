@@ -1,0 +1,37 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import DataTable from '../../../components/DataTable.astro';
+import MetaLine from '../../../components/MetaLine.astro';
+import TrackerNav from '../../../components/TrackerNav.astro';
+import { allFeaturesSorted, statusCounts, DATA_THROUGH, SOURCE_URL, FEATURES } from '../../../lib/features';
+
+const features = allFeaturesSorted();
+const counts = statusCounts();
+
+const columns = [
+  { header: 'Feature', field: 'title', link: 'source_url', lang: 'en' as const },
+  { header: 'Product', field: 'product', mono: true },
+  { header: 'Status', field: 'status', status: true },
+  { header: 'Aangekondigd', field: 'announced_date', mono: true },
+];
+---
+<Layout title="Atlassian features tracker — Rik de Valk" description="Nieuwe, aankomende en afgeronde features in Atlassian Cloud, wekelijks bijgewerkt.">
+  <div class="rv-frame rv-layout-wide" data-pagefind-ignore>
+    <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--measure-text); margin-bottom: var(--space-8);">
+      <a class="rv-plain rv-label" href="/projecten/"><span class="rv-ttl">Projecten</span> /</a>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Atlassian features tracker</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Nieuwe, aankomende en afgeronde features in Atlassian Cloud, wekelijks bijgewerkt.</p>
+      <MetaLine items={[`${FEATURES.length} features gevolgd`, `Data tot en met ${DATA_THROUGH}`]}>
+        <a class="rv-link" href={SOURCE_URL}>Bron op GitHub</a>
+      </MetaLine>
+    </div>
+    <TrackerNav current="all" />
+    <ul style="list-style: none; margin: var(--space-6) 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-8);" class="rv-label">
+      <li><span class="rv-status-accent">Nieuw</span> {counts.nieuw}</li>
+      <li>Binnenkort {counts.binnenkort}</li>
+      <li>Wordt uitgerold {counts.wordtUitgerold}</li>
+      <li>Afgerond {counts.afgerond}</li>
+    </ul>
+    <DataTable columns={columns} items={features} searchable pageSize={50} />
+  </div>
+</Layout>

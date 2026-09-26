@@ -1,0 +1,20 @@
+---
+const STATUS_LABEL: Record<string, string> = {
+  coming_soon: 'Binnenkort',
+  rolling_out_new: 'Nieuw',
+  rolling_out: 'Wordt uitgerold',
+  rollout_complete: 'Afgerond',
+  released: 'Afgerond',
+};
+
+interface Props {
+  status: string;
+}
+
+const { status } = Astro.props;
+const label = STATUS_LABEL[status] ?? status;
+const accent = status === 'rolling_out_new';
+---
+<span class:list={['rv-label', accent && 'rv-status-accent']}>
+  {accent && <span class="rv-status-dot" aria-hidden="true"></span>}{label}
+</span>

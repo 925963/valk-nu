@@ -1,0 +1,28 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import DataTable from '../../../../components/DataTable.astro';
+import MetaLine from '../../../../components/MetaLine.astro';
+import TrackerNav from '../../../../components/TrackerNav.astro';
+import { featuresByStatus, DATA_THROUGH } from '../../../../lib/features';
+
+const features = featuresByStatus(['coming_soon']);
+const columns = [
+  { header: 'Feature', field: 'title', link: 'source_url', lang: 'en' as const },
+  { header: 'Product', field: 'product', mono: true },
+  { header: 'Aangekondigd', field: 'announced_date', mono: true },
+];
+---
+<Layout title="Binnenkort — Atlassian features tracker — Rik de Valk" description="Aangekondigde Atlassian Cloud features die nog niet uitrollen.">
+  <div class="rv-frame rv-layout-wide" data-pagefind-ignore>
+    <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--measure-text); margin-bottom: var(--space-8);">
+      <a class="rv-plain rv-label" href="/projecten/"><span class="rv-ttl">Projecten</span> /</a>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Binnenkort</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Aangekondigd, nog niet aan het uitrollen.</p>
+      <MetaLine items={[`${features.length} features`, `Data tot en met ${DATA_THROUGH}`]} />
+    </div>
+    <TrackerNav current="binnenkort" />
+    <div style="padding-top: var(--space-6);">
+      <DataTable columns={columns} items={features} searchable pageSize={50} />
+    </div>
+  </div>
+</Layout>

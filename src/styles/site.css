@@ -54,6 +54,18 @@ main { display: block; }
   }
 }
 
+/* Full-width single column (Projecten): no side column, tables need the room. */
+.rv-layout-wide {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+@media (max-width: 720px) {
+  .rv-layout-wide {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+}
+
 .rv-sticky {
   position: sticky;
   top: var(--space-24);
@@ -96,4 +108,179 @@ main { display: block; }
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--ink-subtle);
+}
+
+/* Projecten: data tables (§5b) — hairline rows, mono header, no zebra, no cell borders. */
+.rv-table-wrap {
+  overflow-x: auto;
+}
+.rv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 24px;
+}
+.rv-table thead th {
+  background: var(--raised);
+  text-align: left;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+}
+.rv-table tbody td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  vertical-align: baseline;
+}
+.rv-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.rv-table a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.rv-table a:hover {
+  color: var(--accent-strong);
+}
+.rv-table-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rv-table td .rv-label {
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .rv-table thead {
+    display: none;
+  }
+  .rv-table,
+  .rv-table tbody,
+  .rv-table tr,
+  .rv-table td {
+    display: block;
+    width: 100%;
+  }
+  .rv-table tr {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rv-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  .rv-table td {
+    padding: 2px var(--space-4);
+    border: 0;
+  }
+  .rv-table td[data-col-first] {
+    padding-top: 0;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .rv-table td:not([data-col-first])::before {
+    content: attr(data-label) ': ';
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-subtle);
+  }
+}
+
+/* Status tag: word conveys meaning, colour is never the only signal (§5b). */
+.rv-status-accent {
+  color: var(--accent);
+}
+.rv-status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* Table search box + pager: client-side, ported from the old js/pagination.js behaviour. */
+.rv-table-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.rv-table-search input {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 15px/24px var(--font-sans);
+}
+.rv-table-search input::placeholder {
+  color: var(--ink-subtle);
+}
+.rv-table-search-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+}
+.rv-pager {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-subtle);
+}
+.rv-pager button {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  min-width: 32px;
+  min-height: 32px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font: inherit;
+}
+.rv-pager button:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+.rv-pager button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.rv-pager-status {
+  flex: 1;
+}
+
+/* .rv-filter as a real nav (Projecten tracker views): components.css only styles the
+   <button>-based tab variant used for client-side filtering; this is server-rendered links. */
+.rv-filter a {
+  display: inline-block;
+  padding: 12px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+.rv-filter a:hover {
+  color: var(--ink);
+}
+.rv-filter a[aria-selected='true'] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
 }

@@ -1,0 +1,23 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import DataTable from '../../../components/DataTable.astro';
+import MetaLine from '../../../components/MetaLine.astro';
+import toolbox from '../../../../data/toolbox.json';
+
+const columns = [
+  { header: 'Tool', field: 'title', link: 'url' },
+  { header: 'Categorie', field: 'category', mono: true },
+  { header: 'Beschrijving', field: 'description' },
+];
+---
+<Layout title="Toolbox — Rik de Valk" description="Een kleine verzameling handige tools en diensten.">
+  <div class="rv-frame rv-layout-wide">
+    <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--measure-text); margin-bottom: var(--space-8);">
+      <a class="rv-plain rv-label" href="/projecten/"><span class="rv-ttl">Projecten</span> /</a>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Toolbox</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Een kleine verzameling handige tools en diensten.</p>
+      <MetaLine items={[`${toolbox.items.length} tools`]} />
+    </div>
+    <DataTable columns={columns} items={toolbox.items} searchable />
+  </div>
+</Layout>
