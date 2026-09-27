@@ -21,10 +21,14 @@ main { display: block; }
   top: var(--space-4);
 }
 
-/* Two-column page layout: 680px content + 280px side column, 120px gap — sums to measure-wide (1080px). */
+/* Two-column page layout: content + a 280px side column, 120px gap, capped at measure-text
+   (680px) — sums to measure-wide (1080px) once the frame reaches its own max-width. Fluid
+   (minmax(0,1fr)) rather than a fixed 680px: between the 720px single-column breakpoint and
+   ~1080px (e.g. a 768px tablet), a fixed 680px + 120px + 280px (1080px) simply doesn't fit
+   and forced the page to scroll horizontally — 1fr lets the content column shrink instead. */
 .rv-layout {
   display: grid;
-  grid-template-columns: var(--measure-text) 280px;
+  grid-template-columns: minmax(0, 1fr) 280px;
   column-gap: 120px;
   align-items: start;
   padding-top: var(--space-24);
@@ -73,6 +77,37 @@ main { display: block; }
 
 .rv-main {
   min-height: 60vh;
+}
+
+/* The full "Zoeken ⌘K" button doesn't fit next to three nav links under
+   720px (it was overflowing the header, forcing horizontal page scroll) —
+   swap to the icon-only SearchButton there instead. */
+.rv-show-sm {
+  display: none;
+}
+@media (max-width: 720px) {
+  .rv-show-sm {
+    display: inline-flex;
+  }
+  /* Even with the compact search button, "Onderwerpen · Projecten · Archief"
+     plus the wordmark still doesn't fit at narrow phone widths (~360-390px).
+     components.css's own mobile rule only shrinks the nav's *internal* gaps;
+     it doesn't stop the whole header from overflowing the viewport. Let the
+     nav scroll horizontally within itself, same pattern as .rv-filter, so
+     the search button stays reachable and the page itself never scrolls
+     sideways. */
+  .rv-header-right {
+    gap: var(--space-2);
+    min-width: 0;
+  }
+  .rv-nav {
+    overflow-x: auto;
+    min-width: 0;
+    scrollbar-width: none;
+  }
+  .rv-nav::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Cross-document title morph (post list/featured title → article h1): per-post

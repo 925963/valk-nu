@@ -23,7 +23,7 @@ const filterTopics = [{ id: 'all', label: 'Alles' }, ...TOPICS.map((t) => ({ id:
       <p style="margin: 0; max-width: 520px; font-size: 17px; line-height: 28px; color: var(--ink-muted);">
         Overdag help ik organisaties met agile werken en Atlassian oplossingen. Hier schrijf ik over alles wat ik onderweg tegenkom: tools, gadgets en slimme diensten.
       </p>
-      {featured && (
+      {featured ? (
         <FeaturedPost
           href={`/${featured.id}/`}
           slug={featured.id}
@@ -34,6 +34,11 @@ const filterTopics = [{ id: 'all', label: 'Alles' }, ...TOPICS.map((t) => ({ id:
           minutes={getReadingMinutes(featured.body ?? '')}
           en={featured.data.lang === 'en'}
         />
+      ) : (
+        <div style="max-width: 760px;">
+          <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Binnenkort de eerste stukken</h1>
+          <p style="margin: var(--space-4) 0 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Deze plek is klaar; de eerste artikelen volgen binnenkort.</p>
+        </div>
       )}
     </div>
   </DotGrid>

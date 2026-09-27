@@ -49,7 +49,14 @@ const path = Astro.url.pathname;
           </a>
         ))}
       </nav>
-      {search && <SearchButton compact={compact} />}
+      {search && (compact ? (
+        <SearchButton compact />
+      ) : (
+        <>
+          <SearchButton class="rv-hide-sm" />
+          <SearchButton compact class="rv-show-sm" />
+        </>
+      ))}
     </div>
   </div>
   {progress === 'live' && <div class="rv-progress" data-live aria-hidden="true"></div>}
