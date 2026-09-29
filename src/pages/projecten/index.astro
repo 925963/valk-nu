@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MetaLine from '../../components/MetaLine.astro';
+import toolbox from '../../../data/toolbox.json';
+import documentation from '../../../data/atlassian-documentation.json';
+import { FEATURES, DATA_THROUGH } from '../../lib/features';
+
+const PROJECTS = [
+  {
+    href: '/projecten/atlassian-features/',
+    title: 'Atlassian features tracker',
+    description: 'Nieuwe, aankomende en afgeronde features in Atlassian Cloud, wekelijks bijgewerkt.',
+    meta: [`${FEATURES.length} features`, `bijgewerkt ${DATA_THROUGH}`],
+  },
+  {
+    href: '/projecten/toolbox/',
+    title: 'Toolbox',
+    description: 'Een kleine verzameling handige tools en diensten.',
+    meta: [`${toolbox.items.length} tools`],
+  },
+  {
+    href: '/projecten/atlassian-documentatie/',
+    title: 'Atlassian documentatie',
+    description: 'Verzamelde links naar Atlassian product-documentatie.',
+    meta: [`${documentation.items.length} links`],
+  },
+];
+---
+<Layout title="Projecten — Rik de Valk" description="Kleine projecten naast het schrijven: een Atlassian-featuretracker, een toolbox en verzamelde documentatie.">
+  <div class="rv-frame rv-layout-single">
+    <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+      <div class="rv-label">Projecten</div>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Projecten</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Kleine projecten naast het schrijven.</p>
+    </div>
+    <ul style="list-style: none; margin: var(--space-12) 0 0; padding: 0; display: flex; flex-direction: column;">
+      {PROJECTS.map((p) => (
+        <li style="border-bottom: 1px solid var(--line); padding: var(--space-6) 0;">
+          <a class="rv-plain" href={p.href} style="display: flex; flex-direction: column; gap: var(--space-2);">
+            <span class="rv-ttl" style="font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">{p.title}</span>
+            <span style="font-size: 15px; line-height: 24px; color: var(--ink-muted);">{p.description}</span>
+            <MetaLine items={p.meta} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Layout>

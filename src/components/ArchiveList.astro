@@ -1,0 +1,38 @@
+---
+interface ArchivePost {
+  href: string;
+  date: string;
+  title: string;
+  topic: string;
+  en?: boolean;
+}
+
+interface YearGroup {
+  year: number;
+  posts: ArchivePost[];
+}
+
+interface Props {
+  years: YearGroup[];
+}
+
+const { years } = Astro.props;
+---
+<div class="rv-archive">
+  {years.map((y) => (
+    <section class="rv-archive-year" aria-label={String(y.year)}>
+      <h2 class="rv-label" style="margin: 0; line-height: 44px;">{y.year}</h2>
+      <ul class="rv-archive-rows">
+        {y.posts.map((a) => (
+          <li>
+            <a class="rv-plain" href={a.href}>
+              <span class="rv-label">{a.date}</span>
+              <span class="rv-ttl" lang={a.en ? 'en' : undefined}>{a.title}</span>
+              <span class="rv-label">{a.topic}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>

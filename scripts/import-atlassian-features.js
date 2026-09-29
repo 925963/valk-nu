@@ -4,21 +4,23 @@
 /*
  * import-atlassian-features.js — zero-dependency Node (uses system `git`).
  *
- * Builds data/atlassian-features.json, the trimmed snapshot that build.js turns
- * into the terminal-style tracker pages. Feature data comes from the
- * atlassian-features repo (https://github.com/925963/atlassian-features), which
- * re-scrapes the Atlassian Cloud weekly release notes.
+ * Builds data/atlassian-features.json, the snapshot the Astro site's Projecten
+ * section (src/pages/projecten/atlassian-features/) renders at build time.
+ * Feature data comes from the atlassian-features repo
+ * (https://github.com/925963/atlassian-features), which re-scrapes the
+ * Atlassian Cloud weekly release notes.
  *
  * Usage:
  *   node scripts/import-atlassian-features.js --remote        (recommended)
  *       shallow + sparse clones the repo and imports the latest data. No local
  *       checkout needed — always current. This is what the weekly GitHub Action
- *       runs (.github/workflows/refresh-tracker.yml).
+ *       runs (.github/workflows/deploy.yml) before every build; if the import
+ *       fails, the build continues with whatever snapshot is already committed.
  *
  *   node scripts/import-atlassian-features.js [path/to/data/features]
  *       imports from a local checkout (defaults to ../atlassian-features).
  *
- * Then run `node build.js`.
+ * Then run `npm run build`.
  */
 
 const fs = require('fs');

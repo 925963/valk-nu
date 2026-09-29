@@ -1,0 +1,28 @@
+---
+const DEFAULT_MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+
+interface Props {
+  year: number;
+  postWeeks: number[];
+  currentWeek?: number;
+  months?: string[];
+  caption?: string | false;
+}
+
+const { year, postWeeks, currentWeek = 53, months = DEFAULT_MONTHS, caption } = Astro.props;
+const weeks = Array.from({ length: 53 }, (_, i) => i + 1);
+
+function state(w: number): 'post' | 'future' | 'past' {
+  if (postWeeks.includes(w)) return 'post';
+  return w > currentWeek ? 'future' : 'past';
+}
+---
+<figure class="rv-rhythm" style="margin: 0;">
+  <div class="rv-rhythm-dots" role="img" aria-label={`${postWeeks.length} stukken verspreid over ${year}, per week`}>
+    {weeks.map((w) => <span data-s={state(w)}></span>)}
+  </div>
+  <div class="rv-rhythm-months rv-label" aria-hidden="true">
+    {months.map((m) => <span>{m}</span>)}
+  </div>
+  {caption !== false && <figcaption class="rv-label" style="padding-top: 8px;">{caption || `Publicatieritme ${year} · één punt per week`}</figcaption>}
+</figure>

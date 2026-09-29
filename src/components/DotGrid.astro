@@ -1,0 +1,66 @@
+---
+interface Props {
+  restX?: string;
+  restY?: string;
+  restDot?: boolean;
+  interactive?: boolean;
+  class?: string;
+  'aria-label'?: string;
+}
+
+const { restX = '75%', restY = '45%', restDot = true, interactive = true, class: className, 'aria-label': ariaLabel } = Astro.props;
+---
+<section
+  class:list={['rv-dotgrid', className]}
+  aria-label={ariaLabel}
+  data-dotgrid={interactive ? 'interactive' : undefined}
+  data-rest-x={restX}
+  data-rest-y={restY}
+>
+  <div class="rv-dotgrid-dots" aria-hidden="true" style={`--rv-mx: ${restX}; --rv-my: ${restY};`}></div>
+  {restDot && <div class="rv-dotgrid-snap" aria-hidden="true" style={`left: calc(${restX} - 3px); top: calc(${restY} - 3px);`}></div>}
+  <div class="rv-dotgrid-content">
+    <slot />
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-dotgrid="interactive"]').forEach((section) => {
+    const dots = section.querySelector<HTMLElement>('.rv-dotgrid-dots');
+    const snap = section.querySelector<HTMLElement>('.rv-dotgrid-snap');
+    if (!dots) return;
+    const restX = section.dataset.restX ?? '75%';
+    const restY = section.dataset.restY ?? '45%';
+    let raf = 0;
+
+    function setPos(x: number, y: number) {
+      dots!.style.setProperty('--rv-mx', `${x}px`);
+      dots!.style.setProperty('--rv-my', `${y}px`);
+      if (snap) {
+        snap.style.left = '';
+        snap.style.top = '';
+        snap.style.transform = `translate(${Math.round(x / 24) * 24}px, ${Math.round(y / 24) * 24}px)`;
+      }
+    }
+
+    section.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const r = section.getBoundingClientRect();
+        setPos(e.clientX - r.left, e.clientY - r.top);
+      });
+    });
+
+    section.addEventListener('pointerleave', () => {
+      dots!.style.setProperty('--rv-mx', restX);
+      dots!.style.setProperty('--rv-my', restY);
+      if (snap) {
+        snap.style.transform = '';
+        snap.style.left = `calc(${restX} - 3px)`;
+        snap.style.top = `calc(${restY} - 3px)`;
+      }
+    });
+  });
+</script>

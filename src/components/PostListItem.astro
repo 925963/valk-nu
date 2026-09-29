@@ -1,0 +1,34 @@
+---
+import MetaLine from './MetaLine.astro';
+
+interface Props {
+  href: string;
+  date: string;
+  title: string;
+  excerpt?: string;
+  topic?: string;
+  minutes?: number;
+  en?: boolean;
+  outLink?: string;
+  compact?: boolean;
+  topicId?: string;
+  slug?: string;
+}
+
+const { href, date, title, excerpt, topic, minutes, en = false, outLink, compact = false, topicId, slug } = Astro.props;
+const meta = compact
+  ? [date, topic, minutes ? `${minutes} min lezen` : null].filter((x): x is string => Boolean(x))
+  : [topic, minutes ? `${minutes} min lezen` : null].filter((x): x is string => Boolean(x));
+---
+<li class:list={['rv-post', compact && 'rv-post-compact']} data-topic={topicId}>
+  <a class="rv-plain" href={href}>
+    {!compact && <span class="rv-label rv-post-date">{date}</span>}
+    <span class="rv-post-body">
+      <span class="rv-ttl rv-post-title" lang={en ? 'en' : undefined} style={slug ? `view-transition-name: post-${slug}` : undefined}>{title}</span>
+      {excerpt && <span class="rv-post-excerpt" lang={en ? 'en' : undefined}>{excerpt}</span>}
+      <MetaLine items={meta} en={en}>
+        {outLink && <span class="rv-post-out">→ {outLink}</span>}
+      </MetaLine>
+    </span>
+  </a>
+</li>

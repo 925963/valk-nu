@@ -1,0 +1,56 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import TrackerNav from '../../../../components/TrackerNav.astro';
+import StatusTag from '../../../../components/StatusTag.astro';
+import { SOURCE_URL } from '../../../../lib/features';
+---
+<Layout title="Hoe het werkt — Atlassian features tracker — Rik de Valk" description="Hoe deze tracker Atlassian Cloud-features verzamelt en indeelt.">
+  <div class="rv-frame rv-layout-wide" data-pagefind-ignore>
+    <div style="display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--measure-text); margin-bottom: var(--space-8);">
+      <a class="rv-plain rv-label" href="/projecten/"><span class="rv-ttl">Projecten</span> /</a>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Hoe het werkt</h1>
+    </div>
+    <TrackerNav current="hoe-het-werkt" />
+    <div class="rv-prose" style="max-width: var(--measure-text); padding-top: var(--space-8);">
+      <p>
+        Deze tracker volgt features die verschijnen in de
+        <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">wekelijkse Atlassian Cloud release notes</a>.
+        Elke week publiceert Atlassian een overzicht van wijzigingen aan hun cloudproducten; een scraper leest die pagina's, dedupliceert elke
+        feature over de weken waarin hij verschijnt, en legt vast hoe de status verandert.
+      </p>
+
+      <h2 style="margin: var(--space-4) 0 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">Statuslabels</h2>
+      <div class="rv-table-wrap">
+        <table class="rv-table">
+          <thead><tr><th>Label</th><th>Betekenis</th></tr></thead>
+          <tbody>
+            <tr><td data-col-first><StatusTag status="coming_soon" /></td><td data-label="Betekenis">Aangekondigd, nog niet aan het uitrollen.</td></tr>
+            <tr><td data-col-first><StatusTag status="rolling_out_new" /></td><td data-label="Betekenis">Net begonnen met uitrollen, in de laatst gevolgde week.</td></tr>
+            <tr><td data-col-first><StatusTag status="rolling_out" /></td><td data-label="Betekenis">Wordt geleidelijk uitgerold naar sites.</td></tr>
+            <tr><td data-col-first><StatusTag status="rollout_complete" /></td><td data-label="Betekenis">Uitrol afgerond — valt uit de wekelijkse notes.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="margin: var(--space-4) 0 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">Hoe deduplicatie werkt</h2>
+      <p>Een feature verschijnt vaak in meerdere opeenvolgende wekelijkse pagina's terwijl hij uitrolt. De scraper:</p>
+      <ol>
+        <li>Herkent elke feature aan een stabiele id, afgeleid van titel en product.</li>
+        <li>Legt de eerste week waarin hij verscheen vast als aankondigingsdatum.</li>
+        <li>Volgt statusveranderingen (bijvoorbeeld binnenkort → wordt uitgerold).</li>
+        <li>Markeert een feature als afgerond zodra hij een aantal weken achter elkaar niet meer voorkomt.</li>
+      </ol>
+
+      <h2 style="margin: var(--space-4) 0 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">Bijwerkschema</h2>
+      <p>
+        De scraper draait wekelijks via GitHub Actions in de <a href={SOURCE_URL} target="_blank" rel="noopener">bronrepository</a>.
+        Deze pagina wordt bij elke build van valk.nu opnieuw gegenereerd vanuit een snapshot van die data.
+      </p>
+
+      <h2 style="margin: var(--space-4) 0 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">Bron</h2>
+      <p>
+        Data afkomstig van <a href="https://confluence.atlassian.com/cloud/blog" target="_blank" rel="noopener">confluence.atlassian.com/cloud/blog</a>.
+      </p>
+    </div>
+  </div>
+</Layout>

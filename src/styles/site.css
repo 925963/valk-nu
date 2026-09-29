@@ -1,0 +1,321 @@
+/* Page-layout rules on top of tokens.css + components.css. Nothing here overrides a token value. */
+
+html, body { margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+main { display: block; }
+
+.rv-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font: 500 15px/24px var(--font-sans);
+}
+.rv-skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}
+
+/* Two-column page layout: content + a 280px side column, 120px gap, capped at measure-text
+   (680px) — sums to measure-wide (1080px) once the frame reaches its own max-width. Fluid
+   (minmax(0,1fr)) rather than a fixed 680px: between the 720px single-column breakpoint and
+   ~1080px (e.g. a 768px tablet), a fixed 680px + 120px + 280px (1080px) simply doesn't fit
+   and forced the page to scroll horizontally — 1fr lets the content column shrink instead. */
+.rv-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  column-gap: 120px;
+  align-items: start;
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+@media (max-width: 720px) {
+  .rv-layout {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-8);
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+  .rv-layout > aside {
+    order: 2;
+  }
+}
+
+.rv-layout-single {
+  max-width: var(--measure-text);
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+@media (max-width: 720px) {
+  .rv-layout-single {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+}
+
+/* Full-width single column (Projecten): no side column, tables need the room. */
+.rv-layout-wide {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+@media (max-width: 720px) {
+  .rv-layout-wide {
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+  }
+}
+
+.rv-sticky {
+  position: sticky;
+  top: var(--space-24);
+}
+
+.rv-main {
+  min-height: 60vh;
+}
+
+/* The full "Zoeken ⌘K" button doesn't fit next to three nav links under
+   720px (it was overflowing the header, forcing horizontal page scroll) —
+   swap to the icon-only SearchButton there instead. */
+.rv-show-sm {
+  display: none;
+}
+@media (max-width: 720px) {
+  .rv-show-sm {
+    display: inline-flex;
+  }
+  /* Even with the compact search button, "Onderwerpen · Projecten · Archief"
+     plus the wordmark still doesn't fit at narrow phone widths (~360-390px).
+     components.css's own mobile rule only shrinks the nav's *internal* gaps;
+     it doesn't stop the whole header from overflowing the viewport. Let the
+     nav scroll horizontally within itself, same pattern as .rv-filter, so
+     the search button stays reachable and the page itself never scrolls
+     sideways. */
+  .rv-header-right {
+    gap: var(--space-2);
+    min-width: 0;
+  }
+  .rv-nav {
+    overflow-x: auto;
+    min-width: 0;
+    scrollbar-width: none;
+  }
+  .rv-nav::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Cross-document title morph (post list/featured title → article h1): per-post
+   view-transition-name is set inline (ArticleHeader/FeaturedPost/PostListItem)
+   overriding components.css's static `post-title` placeholder. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*) {
+  animation-duration: 200ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Section numbers (01, 02…) before every h2 in prose — a CSS counter so it never touches
+   heading text, which Astro uses to compute slugs and table-of-contents labels. */
+.rv-prose {
+  counter-reset: rv-section;
+}
+.rv-prose .rv-h2 {
+  counter-increment: rv-section;
+}
+.rv-prose .rv-h2::before {
+  content: counter(rv-section, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-subtle);
+}
+
+/* Projecten: data tables (§5b) — hairline rows, mono header, no zebra, no cell borders. */
+.rv-table-wrap {
+  overflow-x: auto;
+}
+.rv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 24px;
+}
+.rv-table thead th {
+  background: var(--raised);
+  text-align: left;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+}
+.rv-table tbody td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  vertical-align: baseline;
+}
+.rv-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.rv-table a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.rv-table a:hover {
+  color: var(--accent-strong);
+}
+.rv-table-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rv-table td .rv-label {
+  white-space: nowrap;
+}
+@media (max-width: 720px) {
+  .rv-table thead {
+    display: none;
+  }
+  .rv-table,
+  .rv-table tbody,
+  .rv-table tr,
+  .rv-table td {
+    display: block;
+    width: 100%;
+  }
+  .rv-table tr {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rv-table tbody tr:last-child {
+    border-bottom: none;
+  }
+  .rv-table td {
+    padding: 2px var(--space-4);
+    border: 0;
+  }
+  .rv-table td[data-col-first] {
+    padding-top: 0;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .rv-table td:not([data-col-first])::before {
+    content: attr(data-label) ': ';
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink-subtle);
+  }
+}
+
+/* Status tag: word conveys meaning, colour is never the only signal (§5b). */
+.rv-status-accent {
+  color: var(--accent);
+}
+.rv-status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+}
+
+/* Table search box + pager: client-side, ported from the old js/pagination.js behaviour. */
+.rv-table-search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.rv-table-search input {
+  flex: 1;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line-control);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 15px/24px var(--font-sans);
+}
+.rv-table-search input::placeholder {
+  color: var(--ink-subtle);
+}
+.rv-table-search-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-subtle);
+  white-space: nowrap;
+}
+.rv-pager {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--ink-subtle);
+}
+.rv-pager button {
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  min-width: 32px;
+  min-height: 32px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  font: inherit;
+}
+.rv-pager button:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+.rv-pager button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.rv-pager-status {
+  flex: 1;
+}
+
+/* .rv-filter as a real nav (Projecten tracker views): components.css only styles the
+   <button>-based tab variant used for client-side filtering; this is server-rendered links. */
+.rv-filter a {
+  display: inline-block;
+  padding: 12px 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-subtle);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+.rv-filter a:hover {
+  color: var(--ink);
+}
+.rv-filter a[aria-selected='true'] {
+  color: var(--ink);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}

@@ -1,0 +1,53 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import MetaLine from '../../../../components/MetaLine.astro';
+import TrackerNav from '../../../../components/TrackerNav.astro';
+import { newThisWeek, slugify } from '../../../../lib/features';
+
+const { latestWeek, byProduct } = newThisWeek();
+const products = [...byProduct.keys()];
+const total = [...byProduct.values()].reduce((n, list) => n + list.length, 0);
+---
+<Layout title="Nieuw — Atlassian features tracker — Rik de Valk" description="Features die deze week voor het eerst zijn gaan uitrollen.">
+  <div class="rv-frame rv-layout-wide" data-pagefind-ignore>
+    <div id="boven" style="display: flex; flex-direction: column; gap: var(--space-4); max-width: var(--measure-text); margin-bottom: var(--space-8);">
+      <a class="rv-plain rv-label" href="/projecten/"><span class="rv-ttl">Projecten</span> /</a>
+      <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Nieuw</h1>
+      <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Net begonnen met uitrollen, in de laatste gevolgde week.</p>
+      {latestWeek ? (
+        <MetaLine items={[`Week van ${latestWeek}`, `${total} feature(s) over ${products.length} producten`]} />
+      ) : (
+        <MetaLine items={['Niets nieuws']} />
+      )}
+    </div>
+    <TrackerNav current="nieuw" />
+
+    {products.length > 0 && (
+      <nav aria-label="Spring naar product" style="padding: var(--space-6) 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6);">
+        {products.map((p) => (
+          <a class="rv-link" href={`#prod-${slugify(p)}`}>{p}</a>
+        ))}
+      </nav>
+    )}
+
+    <div style="display: flex; flex-direction: column; gap: var(--space-12); max-width: var(--measure-text); padding-top: var(--space-4);">
+      {products.map((p) => (
+        <section aria-labelledby={`prod-${slugify(p)}`}>
+          <h2 id={`prod-${slugify(p)}`} style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em;">{p}</h2>
+          <ul style="list-style: none; margin: var(--space-4) 0 0; padding: 0; display: flex; flex-direction: column;">
+            {byProduct.get(p)!.map((f) => (
+              <li style="border-bottom: 1px solid var(--line); padding: var(--space-4) 0;">
+                <a class="rv-link" href={f.source_url} target="_blank" rel="noopener" lang="en">{f.title}</a>
+                <p style="margin: var(--space-1) 0 0; font-size: 15px; line-height: 24px; color: var(--ink-muted);" lang="en">{f.description}</p>
+              </li>
+            ))}
+          </ul>
+          <div style="padding-top: var(--space-2);">
+            <a class="rv-link" href="#boven">↑ Terug naar boven</a>
+          </div>
+        </section>
+      ))}
+      {products.length === 0 && <p style="color: var(--ink-muted);">Geen nieuwe features deze week.</p>}
+    </div>
+  </div>
+</Layout>

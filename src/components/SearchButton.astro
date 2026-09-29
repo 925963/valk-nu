@@ -1,0 +1,23 @@
+---
+interface Props {
+  label?: string;
+  shortcut?: string;
+  compact?: boolean;
+  class?: string;
+}
+
+const { label = 'Zoeken', shortcut = '⌘K', compact = false, class: className } = Astro.props;
+---
+{compact ? (
+  <button class:list={['rv-icon-btn', className]} type="button" aria-label={label} data-search-trigger aria-keyshortcuts="Meta+K">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="m20 20-3.5-3.5"></path>
+    </svg>
+  </button>
+) : (
+  <button class:list={['rv-kbd', className]} type="button" data-search-trigger aria-keyshortcuts="Meta+K">
+    {label}
+    <span class="rv-kbd-key">{shortcut}</span>
+  </button>
+)}

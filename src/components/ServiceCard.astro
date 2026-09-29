@@ -1,0 +1,29 @@
+---
+import FactList from './FactList.astro';
+import Button from './Button.astro';
+
+interface Fact {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  domain: string;
+  href: string;
+  facts: Fact[];
+  cta?: string;
+  disclosure?: string;
+}
+
+const { domain, href, facts, cta = 'Bekijk dienst', disclosure = 'Geen affiliate-link' } = Astro.props;
+---
+<section class="rv-box" aria-label="Over de dienst">
+  <div class="rv-box-top">
+    <span class="rv-service-domain">{domain}</span>
+    <span class="rv-label">{disclosure}</span>
+  </div>
+  <FactList facts={facts} />
+  <div>
+    <Button href={href} arrow rel="noopener">{cta}</Button>
+  </div>
+</section>

@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ArchiveList from '../../components/ArchiveList.astro';
+import PublishRhythm from '../../components/PublishRhythm.astro';
+import { TOPICS } from '../../config/topics';
+import { isPublished, getIsoWeek } from '../../lib/content';
+
+const SHORT_LABEL: Record<string, string> = { agile: 'Agile', reviews: 'Review', vondsten: 'Vondst' };
+
+const allPosts = await getCollection('posts');
+const published = allPosts.filter(isPublished).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const byYear = new Map<number, typeof published>();
+for (const post of published) {
+  const year = post.data.date.getUTCFullYear();
+  byYear.set(year, [...(byYear.get(year) ?? []), post]);
+}
+const years = [...byYear.entries()]
+  .sort((a, b) => b[0] - a[0])
+  .map(([year, posts]) => ({
+    year,
+    posts: posts.map((p) => ({
+      href: `/${p.id}/`,
+      date: p.data.date.toISOString().slice(5, 10),
+      title: p.data.title,
+      topic: SHORT_LABEL[p.data.topic],
+      en: p.data.lang === 'en',
+    })),
+  }));
+
+const latestYear = years[0]?.year ?? new Date().getUTCFullYear();
+const postWeeks = published.filter((p) => p.data.date.getUTCFullYear() === latestYear).map((p) => getIsoWeek(p.data.date));
+const currentWeek = getIsoWeek(new Date());
+
+const topicCounts = TOPICS.map((t) => ({ ...t, count: published.filter((p) => p.data.topic === t.id).length }));
+---
+<Layout title="Archief — Rik de Valk" description="Alles wat ik heb geschreven, nieuwste eerst.">
+  <div class="rv-frame rv-layout">
+    <div style="display: flex; flex-direction: column; gap: var(--space-12);">
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="rv-label">Archief</div>
+        <h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; letter-spacing: -0.02em;">Alle stukken</h1>
+        <p style="margin: 0; font-size: 20px; line-height: 32px; color: var(--ink-muted);">Alles wat ik heb geschreven, nieuwste eerst.</p>
+      </div>
+      <PublishRhythm year={latestYear} postWeeks={postWeeks} currentWeek={currentWeek} />
+      <ArchiveList years={years} />
+    </div>
+    <aside style="display: flex; flex-direction: column; gap: var(--space-12);">
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="rv-label" style="padding: 12px 0; border-bottom: 1px solid var(--line);">Per onderwerp</div>
+        {topicCounts.map((t) => (
+          <div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: var(--space-2);">
+            <a href={`/onderwerpen/${t.slug}/`} class="rv-plain" style="display: flex; justify-content: space-between; align-items: baseline;">
+              <span class="rv-ttl" style="font-size: 15px; line-height: 24px; font-weight: 500; color: var(--accent);">{t.label}</span>
+              <span class="rv-label">{t.count}</span>
+            </a>
+            <span style="font-size: 15px; line-height: 24px; color: var(--ink-muted);">{t.description}</span>
+          </div>
+        ))}
+      </div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="rv-label" style="padding: 12px 0; border-bottom: 1px solid var(--line);">Volgen</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-2); font-size: 15px; line-height: 24px;">
+          <a class="rv-link" href="/feed.xml">RSS-feed (alles)</a>
+          <a class="rv-link" href="https://www.linkedin.com/in/rikdevalk/">LinkedIn</a>
+          <a class="rv-link" href="mailto:rik@valk.nu">E-mail</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</Layout>

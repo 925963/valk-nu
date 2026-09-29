@@ -1,0 +1,54 @@
+/* valk.nu design tokens — generated from tokens.json (design system "Rik de Valk").
+   Light is the default; dark follows the visitor's OS setting. There is no manual theme toggle. */
+:root {
+  color-scheme: light dark;
+  --paper: #fbfbf9;
+  --raised: #f3f3f0;
+  --line: #e3e3de;
+  --line-strong: #c9cac3;
+  --line-control: #80868c;
+  --grid-dot: #c2c3bc;
+  --ink: #1c2024;
+  --ink-muted: #5a6167;
+  --ink-subtle: #676e74;
+  --accent: #3b6a6e;
+  --accent-strong: #2c5155;
+  --accent-soft: #e5eeed;
+  --on-accent: #ffffff;
+  --shadow-float: 0 1px 2px rgba(28,32,36,0.04), 0 8px 24px rgba(28,32,36,0.06);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-full: 999px;
+  --measure-text: 680px;
+  --measure-wide: 1080px;
+  --border-width: 1px;
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121416;
+    --raised: #191c1f;
+    --line: #262a2e;
+    --line-strong: #3a3f44;
+    --line-control: #666d73;
+    --grid-dot: #41464c;
+    --ink: #e5e6e3;
+    --ink-muted: #a0a7ab;
+    --ink-subtle: #868d92;
+    --accent: #8bb7b8;
+    --accent-strong: #aacfcf;
+    --accent-soft: #1c2a2b;
+    --on-accent: #121416;
+    --shadow-float: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.35);
+  }
+}
